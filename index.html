@@ -3,131 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBERQUIZ 2077 | Samuel Galvis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Cuestionario de Tecnología - Samuel Galvis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-pink: #ff006e;
-            --neon-blue: #06ffa5;
-            --neon-purple: #9d4edd;
-            --dark-bg: #0a0a1f;
-            --darker: #050514;
-            --text: #e0e0ff;
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff00aa;
+            --neon-purple: #b700ff;
+            --dark: #0d0d1f;
+            --darker: #050515;
+            --text: #e0f0ff;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: var(--darker);
             color: var(--text);
             font-family: 'Rajdhani', sans-serif;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 0, 110, 0.15) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(6, 255, 165, 0.15) 0%, transparent 20%);
+            background: linear-gradient(135deg, #0a001f, #00112c);
             overflow-x: hidden;
         }
-
-        .glitch {
-            position: relative;
-            animation: glitch 3s infinite;
-        }
-
-        @keyframes glitch {
-            0%,100% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
-            14% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
-            15% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.05em 0 #fc00ff; }
-            49% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.05em 0 #fc00ff; }
-            50% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
-            99% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
-        }
-
         .container {
             max-width: 900px;
-            margin: 40px auto;
-            background: rgba(10, 10, 31, 0.85);
+            margin: 30px auto;
+            background: rgba(10, 10, 35, 0.95);
+            border-radius: 20px;
             border: 2px solid var(--neon-blue);
-            border-radius: 16px;
-            box-shadow: 
-                0 0 30px rgba(6, 255, 165, 0.5),
-                inset 0 0 20px rgba(6, 255, 165, 0.1);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
             overflow: hidden;
-            position: relative;
         }
-
         .header {
-            background: linear-gradient(135deg, #1a0033, #000011);
+            background: linear-gradient(135deg, #1a0033, #000033);
             padding: 40px 20px;
             text-align: center;
-            border-bottom: 2px solid var(--neon-pink);
-            position: relative;
+            border-bottom: 3px solid var(--neon-pink);
         }
-
         .header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 900;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(6, 255, 165, 0.8);
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
         }
-
         .author {
             position: absolute;
-            bottom: 10px;
-            right: 20px;
+            bottom: 15px;
+            right: 25px;
             font-size: 1.1rem;
             color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
+            text-shadow: 0 0 15px var(--neon-pink);
         }
-
         .timer {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            padding: 10px 20px;
-            border: 1px solid var(--neon-blue);
-            border-radius: 8px;
+            top: 20px;
+            right: 25px;
+            background: rgba(0,0,0,0.6);
+            padding: 12px 25px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
             font-family: 'Orbitron';
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--neon-blue);
-            text-shadow: 0 0 15px var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
         }
-
         .progress-container {
-            height: 8px;
+            height: 10px;
             background: rgba(255,255,255,0.1);
-            margin: 20px 40px;
+            margin: 25px 50px;
+            border-radius: 5px;
+            overflow: hidden;
         }
-
         .progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
             width: 0%;
-            box-shadow: 0 0 20px var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-blue);
             transition: width 0.6s ease;
         }
-
         .content {
             padding: 50px 40px;
-            min-height: 600px;
+            min-height: 580px;
+            position: relative;
         }
-
-        .welcome, .result {
-            text-align: center;
-        }
-
+        .welcome, .result { text-align: center; }
         .welcome h2 {
             font-family: 'Orbitron';
             font-size: 2.8rem;
             margin: 20px 0;
             color: var(--neon-blue);
-            text-shadow: 0 0 20px var(--neon-blue);
+            text-shadow: 0 0 25px var(--neon-blue);
         }
-
         input#nameInput {
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             border: 2px solid var(--neon-purple);
             color: var(--text);
             padding: 18px;
@@ -138,115 +107,95 @@
             text-align: center;
             margin: 30px auto;
             display: block;
-            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
+            box-shadow: 0 0 25px rgba(183, 0, 255, 0.4);
         }
-
         input#nameInput:focus {
             outline: none;
             border-color: var(--neon-blue);
-            box-shadow: 0 0 30px rgba(6, 255, 165, 0.8);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.8);
         }
-
         .topics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             margin: 40px 0;
         }
-
         .topic {
-            background: rgba(255, 0, 110, 0.15);
+            background: rgba(255, 0, 170, 0.15);
             border: 1px solid var(--neon-pink);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             text-align: center;
             font-weight: 700;
-            font-size: 1.2rem;
             color: var(--neon-pink);
-            box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
-            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 170, 0.3);
         }
-
-        .topic:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
-        }
-
         .question-card {
-            background: rgba(10, 10, 40, 0.7);
+            background: rgba(15, 15, 50, 0.7);
             padding: 40px;
-            border-radius: 16px;
+            border-radius: 18px;
             border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 30px rgba(6, 255, 165, 0.3);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.3);
         }
-
         .question-text {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
         }
-
         .option {
             background: rgba(255,255,255,0.05);
             border: 2px solid transparent;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 12px;
+            padding: 22px;
+            margin: 16px 0;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.4s;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
         }
-
         .option:hover {
             border-color: var(--neon-pink);
-            background: rgba(255, 0, 110, 0.1);
-            transform: translateX(10px);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
+            background: rgba(255, 0, 170, 0.15);
+            transform: translateX(12px);
+            box-shadow: 0 0 25px rgba(255, 0, 170, 0.5);
         }
-
         .option.selected {
             border-color: var(--neon-blue);
-            background: rgba(6, 255, 165, 0.15);
-            box-shadow: 0 0 25px rgba(6, 255, 165, 0.6);
+            background: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
         }
-
         button {
             background: transparent;
             border: 2px solid var(--neon-blue);
             color: var(--neon-blue);
-            padding: 16px 40px;
+            padding: 16px 45px;
             font-family: 'Orbitron';
-            font-size: 1.3rem;
-            border-radius: 8px;
+            font-size: 1.4rem;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.4s;
-            text-shadow: 0 0 10px var(--neon-blue);
-            margin: 10px;
+            text-shadow: 0 0 15px var(--neon-blue);
+            margin: 15px;
         }
-
         button:hover {
             background: var(--neon-blue);
             color: black;
-            box-shadow: 0 0 30px var(--neon-blue);
+            box-shadow: 0 0 40px var(--neon-blue);
             transform: scale(1.1);
         }
-
         .btn-pink {
             border-color: var(--neon-pink);
             color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
+            text-shadow: 0 0 15px var(--neon-pink);
         }
-
         .btn-pink:hover {
             background: var(--neon-pink);
-            box-shadow: 0 0 30px var(--neon-pink);
+            box-shadow: 0 0 40px var(--neon-pink);
         }
-
         .score-circle {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             margin: 40px auto;
             border-radius: 50%;
             display: flex;
@@ -254,39 +203,31 @@
             align-items: center;
             justify-content: center;
             font-family: 'Orbitron';
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
-            box-shadow: 0 0 50px rgba(6, 255, 165, 0.8);
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.9);
+            animation: glow 2s infinite alternate;
         }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 50px rgba(6, 255, 165, 0.8); }
-            50% { box-shadow: 0 0 80px rgba(6, 255, 165, 1); }
-            100% { box-shadow: 0 0 50px rgba(6, 255, 165, 0.8); }
+        @keyframes glow {
+            from { box-shadow: 0 0 60px rgba(0, 240, 255, 0.9); }
+            to { box-shadow: 0 0 90px rgba(0, 240, 255, 1); }
         }
-
         .time-result {
-            font-size: 1.8rem;
-            margin: 20px 0;
+            font-size: 2rem;
+            margin: 25px 0;
             color: var(--neon-purple);
-            text-shadow: 0 0 15px var(--neon-purple);
-        }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2.5rem; }
-            .content { padding: 30px 20px; }
+            text-shadow: 0 0 20px var(--neon-purple);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="glitch">CYBERQUIZ 2077</h1>
-            <p>NIVEL INTERMEDIO • 20 PREGUNTAS • TECNOLOGÍA NEON</p>
+        <div class="header" style="position:relative">
+            <h1>Cuestionario de Tecnología</h1>
+            <p style="font-size:1.3rem; margin-top:10px;">Nivel Intermedio • 20 preguntas aleatorias</p>
             <div class="timer" id="timer">00:00</div>
-            <div class="author">© Samuel Galvis</div>
+            <div class="author">Por: Samuel Galvis</div>
             <div class="progress-container">
                 <div class="progress-bar" id="progress"></div>
             </div>
@@ -296,129 +237,158 @@
     </div>
 
     <script>
-        // Base de datos (mismas 40 preguntas de antes)
-        const questionsDB = [ /* ← Aquí van las 40 preguntas que ya tenías. Para no repetir, usaré un placeholder. Copia las 40 del mensaje anterior aquí */ ];
-        // === PEGA AQUÍ LAS 40 PREGUNTAS DEL CÓDIGO ANTERIOR ===
-        // (Si no las tienes, dime y te las paso completas otra vez)
+        // === LAS 40 PREGUNTAS COMPLETAS ===
+        const questionsDB = [
+            { question: "¿Qué componente gestiona la memoria virtual?", options: ["CPU", "MMU", "GPU", "RAM"], correct: 1, topic: "Hardware" },
+            { question: "¿Cuál es más rápido en acceso aleatorio?", options: ["HDD", "SSD", "DVD", "Tape"], correct: 1, topic: "Hardware" },
+            { question: "¿Qué significa PCIe?", options: ["Peripheral Component Interconnect Express", "Power Cache Interface", "Parallel CPU Extension", "Personal Card Interface"], correct: 0, topic: "Hardware" },
+            { question: "¿En qué se mide principalmente la velocidad de CPU moderna?", options: ["GHz y núcleos", "Voltios", "RPM", "Bytes"], correct: 0, topic: "Hardware" },
+            { question: "¿Qué riesgo tiene el overclocking?", options: ["Sobrecalentamiento", "Menor rendimiento", "Más ruido", "Menos consumo"], correct: 0, topic: "Hardware" },
+            { question: "¿Qué inicializa la BIOS al encender?", options: ["El hardware", "Windows", "Internet", "Antivirus"], correct: 0, topic: "Hardware" },
+            { question: "¿Qué memoria es volátil y se usa como caché?", options: ["SRAM", "DRAM", "Flash", "ROM"], correct: 0, topic: "Hardware" },
+            { question: "¿Para qué sirve RAID?", options: ["Redundancia y rendimiento", "Encriptación", "Conexión WiFi", "Overclock"], correct: 0, topic: "Hardware" },
+            { question: "¿Qué traduce un compilador?", options: ["Código fuente a máquina", "HTML a CSS", "Imágenes", "Sonido"], correct: 0, topic: "Software" },
+            { question: "¿Qué diferencia software libre de open source?", options: ["Libertad ética vs colaboración", "Son iguales", "Libre es pago", "Open source es ilegal"], correct: 0, topic: "Software" },
+            { question: "¿Qué es MVC?", options: ["Model-View-Controller", "Memory-Virtual-Cache", "Main-Value-Class", "Module-View-Code"], correct: 0, topic: "Software" },
+            { question: "¿Cómo funciona la recursión?", options: ["Función se llama a sí misma", "Bucle for", "Paralelismo", "Compilación"], correct: 0, topic: "Software" },
+            { question: "¿Qué es Agile?", options: ["Metodología iterativa", "Lenguaje", "Base de datos", "Red"], correct: 0, topic: "Software" },
+            { question: "¿Ejemplo de lenguaje OOP?", options: ["Java", "SQL", "HTML", "Batch"], correct: 0, topic: "Software" },
+            { question: "¿Qué hace el garbage collector?", options: ["Libera memoria automáticamente", "Compila", "Depura", "Encripta"], correct: 0, topic: "Software" },
+            { question: "¿Qué es Git?", options: ["Control de versiones", "Antivirus", "Editor", "Navegador"], correct: 0, topic: "Software" },
+            { question: "¿Qué capa OSI hace enrutamiento?", options: ["Capa 3", "Capa 1", "Capa 7", "Capa 4"], correct: 0, topic: "Redes" },
+            { question: "¿TCP vs UDP?", options: ["TCP orientado a conexión", "UDP más rápido", "Son iguales", "UDP garantiza entrega"], correct: 0, topic: "Redes" },
+            { question: "¿Qué es un firewall?", options: ["Filtra tráfico por reglas", "Router", "Switch", "Cable"], correct: 0, topic: "Redes" },
+            { question: "¿Qué asigna DHCP?", options: ["IPs dinámicas", "Dominios", "Archivos", "Contraseñas"], correct: 0, topic: "Redes" },
+            { question: "¿Qué es VPN?", options: ["Red privada virtual", "Virus Protection", "Very Powerful Network", "Video Protocol"], correct: 0, topic: "Redes" },
+            { question: "¿Rango de IPs privadas clase C?", options: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "127.0.0.0/8"], correct: 0, topic: "Redes" },
+            { question: "¿Qué traduce NAT?", options: ["IPs privadas a públicas", "Dominios a IP", "HTTP a HTTPS", "TCP a UDP"], correct: 0, topic: "Redes" },
+            { question: "¿Por qué HTTPS?", options: ["Encriptación SSL/TLS", "Más rápido", "Menos datos", "IPv6"], correct: 0, topic: "Redes" },
+            { question: "¿Padre de la computadora moderna?", options: ["Alan Turing", "Steve Jobs", "Bill Gates", "Elon Musk"], correct: 0, topic: "Historia" },
+            { question: "¿Año del World Wide Web?", options: ["1989", "1995", "2000", "1975"], correct: 0, topic: "Historia" },
+            { question: "¿Qué fue ENIAC?", options: ["Primera computadora electrónica (1945)", "Primer móvil", "Primer virus", "Primer juego"], correct: 0, topic: "Historia" },
+            { question: "¿Fundadores de Microsoft?", options: ["Gates y Allen (1975)", "Jobs y Wozniak", "Page y Brin", "Zuckerberg"], correct: 0, topic: "Historia" },
+            { question: "¿Qué inició la era smartphone?", options: ["iPhone 2007", "BlackBerry 1999", "Nokia 3310", "Android 2010"], correct: 0, topic: "Historia" },
+            { question: "¿Quién inventó el transistor?", options: ["Bell Labs 1947", "Edison", "Tesla", "Marconi"], correct: 0, topic: "Historia" },
+            { question: "¿Qué fue ARPANET?", options: ["Precursor de Internet (1969)", "Primer PC", "Primer virus", "Primer Windows"], correct: 0, topic: "Historia" },
+            { question: "¿Década de los PCs personales?", options: ["1980s", "1960s", "2000s", "1950s"], correct: 0, topic: "Historia" },
+            { question: "¿Qué es IoT?", options: ["Internet of Things", "Input Output Terminal", "Intelligent OS Tool", "Internet on TV"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué es blockchain?", options: ["Cadena de bloques distribuida", "Virus", "Lenguaje", "Hardware"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué es la nube?", options: ["Servicios remotos por internet", "Almacenamiento físico", "GPU externa", "Red local"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué son las 3V del Big Data?", options: ["Volume, Velocity, Variety", "View, Validate, Verify", "Virtual, Visual, Viral", "Voltage, Value, Version"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué es Machine Learning?", options: ["Algoritmos que aprenden de datos", "Hardware", "Red", "Sistema operativo"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué crea la Realidad Virtual?", options: ["Entornos inmersivos simulados", "Mejor WiFi", "Más RAM", "Encriptación"], correct: 0, topic: "Tecnología" }
+        ];
 
-        let questions = [], currentIndex = 0, answers = [], userName = '', startTime, timerInterval;
+        let questions = [], currentIndex = -1, answers = [], userName = '', startTime, timerInterval;
 
-        const topics = ["Tecnología General", "Redes", "Hardware", "Software", "Historia Tech"];
-
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const secs = (seconds % 60).toString().padStart(2, '0');
-            return `${mins}:${secs}`;
+        function formatTime(sec) {
+            const m = String(Math.floor(sec/60)).padStart(2,'0');
+            const s = String(sec%60).padStart(2,'0');
+            return `${m}:${s}`;
         }
 
         function startTimer() {
             startTime = Date.now();
             timerInterval = setInterval(() => {
-                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const elapsed = Math.floor((Date.now() - startTime)/1000);
                 document.getElementById('timer').textContent = formatTime(elapsed);
             }, 1000);
         }
 
         function stopTimer() {
             clearInterval(timerInterval);
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            return elapsed;
+            return Math.floor((Date.now() - startTime)/1000);
         }
 
-        function renderContent() {
-            const content = document.getElementById('content');
-            const progress = currentIndex < 20 ? (currentIndex / 20) * 100 : 100;
-            document.getElementById('progress').style.width = progress + '%';
+        function updateProgress() {
+            const pct = currentIndex >= 0 && currentIndex < 20 ? (currentIndex/20)*100 : currentIndex >= 20 ? 100 : 0;
+            document.getElementById('progress').style.width = pct + '%';
+        }
+
+        function render() {
+            const c = document.getElementById('content');
+            updateProgress();
 
             if (!userName) {
-                content.innerHTML = `
-                    <div class="welcome">
-                        <h2>ACCESO AL SISTEMA</h2>
-                        <p>Identifícate, Runner</p>
-                        <input type="text" id="nameInput" placeholder="TU ALIAS AQUÍ" autofocus>
-                        <button class="btn-pink" onclick="setName()">INICIAR SESIÓN</button>
-                    </div>`;
-                document.getElementById('nameInput').focus();
+                c.innerHTML = `<div class="welcome">
+                    <h2>¡Bienvenido!</h2>
+                    <p>Ingresa tu nombre para comenzar</p>
+                    <input type="text" id="nameInput" placeholder="Tu nombre aquí" autofocus>
+                    <button class="btn-pink" onclick="saveName()">Iniciar</button>
+                </div>`;
             } else if (currentIndex === -1) {
-                content.innerHTML = `
-                    <div class="welcome">
-                        <h2>BIENVENIDO<br><span style="color:var(--neon-pink)">${userName.toUpperCase()}</span></h2>
-                        <p>Prepárate para el desafío tecnológico definitivo</p>
-                        <div class="topics-grid">
-                            ${topics.map(t => `<div class="topic">${t}</div>`).join('')}
-                        </div>
-                        <button class="btn-pink" onclick="beginQuiz()">INICIAR CUESTIONARIO</button>
-                    </div>`;
+                c.innerHTML = `<div class="welcome">
+                    <h2>¡Hola, ${userName}!</h2>
+                    <p>Este cuestionario evalúa tus conocimientos intermedios en tecnología.</p>
+                    <div class="topics-grid">
+                        <div class="topic">Hardware</div>
+                        <div class="topic">Software</div>
+                        <div class="topic">Redes</div>
+                        <div class="topic">Historia Tech</div>
+                        <div class="topic">Tecnología</div>
+                    </div>
+                    <button class="btn-pink" onclick="startQuiz()">Comenzar Cuestionario</button>
+                </div>`;
             } else if (currentIndex < 20) {
                 const q = questions[currentIndex];
-                content.innerHTML = `
-                    <div class="question-card">
-                        <h3>PREGUNTA ${currentIndex + 1}/20</h3>
-                        <div class="question-text">${q.question}</div>
-                        <div class="options">
-                            ${q.options.map((opt, i) => `
-                                <label class="option ${answers[currentIndex] === i ? 'selected' : ''}">
-                                    <input type="radio" name="q" value="${i}" ${answers[currentIndex] === i ? 'checked' : ''}>
-                                    ${opt}
-                                </label>
-                            `).join('')}
-                        </div>
-                        <div style="margin-top:40px; text-align:center;">
-                            <button class="btn-pink" ${currentIndex === 0 ? 'disabled' : ''} onclick="prev()">ANTERIOR</button>
-                            <button class="btn-pink" onclick="next()">${currentIndex === 19 ? 'FINALIZAR' : 'SIGUIENTE'}</button>
-                        </div>
-                    </div>`;
-                document.querySelectorAll('input[name="q"]').forEach(r => {
-                    r.onchange = () => { answers[currentIndex] = parseInt(r.value); };
-                });
+                c.innerHTML = `<div class="question-card">
+                    <h3 style="color:var(--neon-pink); margin-bottom:20px;">Pregunta ${currentIndex+1} de 20</h3>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt,i) => `
+                            <label class="option ${answers[currentIndex]===i?'selected':''}">
+                                <input type="radio" name="a" value="${i}" ${answers[currentIndex]===i?'checked':''}> ${opt}
+                            </label>`).join('')}
+                    </div>
+                    <div style="text-align:center; margin-top:40px;">
+                        <button ${currentIndex===0?'disabled':''} onclick="prev()">Anterior</button>
+                        <button class="btn-pink" onclick="next()">${currentIndex===19?'Finalizar':'Siguiente'}</button>
+                    </div>
+                </div>`;
+                document.querySelectorAll('input[name="a"]').forEach(r => r.onchange = () => answers[currentIndex] = parseInt(r.value));
             } else {
-                const totalTime = stopTimer();
-                const correct = answers.filter((a, i) => a === questions[i].correct).length;
-                const percent = Math.round((correct / 20) * 100);
+                const time = stopTimer();
+                const correct = answers.filter((a,i) => a === questions[i].correct).length;
+                const percent = Math.round((correct/20)*100);
                 let feedback = "";
-                if (percent >= 90 && totalTime <= 600) feedback = "¡LEYENDA VIVIENTE! Velocidad y precisión perfectas.";
-                else if (percent >= 80) feedback = "¡ELITE DIGITAL! Dominas el ciberespacio.";
-                else if (percent >= 65) feedback = "Runner experimentado. Buen trabajo.";
-                else feedback = "Vuelve al dojo, novato. Hay mucho que aprender.";
+                if (percent >= 90) feedback = "¡EXCELENTE! Eres un experto en tecnología.";
+                else if (percent >= 75) feedback = "¡Muy bien! Gran nivel intermedio.";
+                else if (percent >= 60) feedback = "Buen esfuerzo, sigue practicando.";
+                else feedback = "¡Ánimo! Hay mucho por aprender.";
 
-                content.innerHTML = `
-                    <div class="result">
-                        <h2>MISIÓN COMPLETADA</h2>
-                        <div class="score-circle">${correct}/20</div>
-                        <h3 style="color:var(--neon-pink); margin:20px 0">${percent}%</h3>
-                        <div class="time-result">TIEMPO: ${formatTime(totalTime)}</div>
-                        <p style="font-size:1.5rem; margin:30px 0; max-width:600px;">${feedback}</p>
-                        <button class="btn-pink" onclick="location.reload()">NUEVA PARTIDA</button>
-                    </div>`;
+                c.innerHTML = `<div class="result">
+                    <h2>¡Completado, ${userName}!</h2>
+                    <div class="score-circle">${correct}<small style="font-size:1.5rem">/20</small></div>
+                    <h3 style="color:var(--neon-pink); margin:20px 0;">${percent}% de aciertos</h3>
+                    <div class="time-result">Tiempo: ${formatTime(time)}</div>
+                    <p style="font-size:1.5rem; max-width:600px; margin:30px auto;">${feedback}</p>
+                    <button class="btn-pink" onclick="location.reload()">Volver a Intentar</button>
+                </div>`;
             }
         }
 
-        function setName() {
-            userName = document.getElementById('nameInput').value.trim() || "Runner";
-            renderContent();
+        function saveName() {
+            userName = document.getElementById('nameInput').value.trim() || "Usuario";
+            render();
         }
-
-        function beginQuiz() {
-            questions = [...questionsDB].sort(() => 0.5 - Math.random()).slice(0, 20);
+        function startQuiz() {
+            questions = [...questionsDB].sort(() => Math.random()-0.5).slice(0,20);
             answers = new Array(20).fill(null);
             currentIndex = 0;
             startTimer();
-            renderContent();
+            render();
         }
-
         function next() {
             if (currentIndex < 19) currentIndex++;
             else currentIndex = 20;
-            renderContent();
+            render();
         }
-
         function prev() {
             if (currentIndex > 0) currentIndex--;
-            renderContent();
+            render();
         }
 
-        // Iniciar
-        renderContent();
+        render(); // Inicia todo
     </script>
 </body>
 </html>
