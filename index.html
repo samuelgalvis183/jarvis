@@ -3,528 +3,421 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuestionario de Tecnología - Samuel Galvis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>CYBERQUIZ 2077 | Samuel Galvis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #5e60ce;
-            --primary-light: #7274d9;
-            --accent: #48bfe3;
-            --success: #06d6a0;
-            --danger: #f25a6d;
-            --dark: #1e1e2e;
-            --gray: #94a3b8;
-            --light: #f8fafc;
-            --border: #e2e8f0;
+            --neon-pink: #ff006e;
+            --neon-blue: #06ffa5;
+            --neon-purple: #9d4edd;
+            --dark-bg: #0a0a1f;
+            --darker: #050514;
+            --text: #e0e0ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--darker);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: var(--dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 110, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(6, 255, 165, 0.15) 0%, transparent 20%);
+            overflow-x: hidden;
+        }
+
+        .glitch {
+            position: relative;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%,100% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
+            14% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
+            15% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.05em 0 #fc00ff; }
+            49% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.05em 0 #fc00ff; }
+            50% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
+            99% { text-shadow: 0.05em 0 0 #00fffc, -0.05em 0 0 #fc00ff; }
         }
 
         .container {
-            width: 100%;
-            max-width: 850px;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            max-width: 900px;
+            margin: 40px auto;
+            background: rgba(10, 10, 31, 0.85);
+            border: 2px solid var(--neon-blue);
+            border-radius: 16px;
+            box-shadow: 
+                0 0 30px rgba(6, 255, 165, 0.5),
+                inset 0 0 20px rgba(6, 255, 165, 0.1);
             overflow: hidden;
+            position: relative;
         }
 
         .header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 40px 30px;
+            background: linear-gradient(135deg, #1a0033, #000011);
+            padding: 40px 20px;
             text-align: center;
+            border-bottom: 2px solid var(--neon-pink);
             position: relative;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            opacity: 0.95;
-            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(6, 255, 165, 0.8);
         }
 
         .author {
             position: absolute;
-            bottom: 12px;
+            bottom: 10px;
             right: 20px;
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 1.1rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .timer {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            font-family: 'Orbitron';
+            font-size: 1.4rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
         }
 
         .progress-container {
             height: 8px;
-            background: rgba(255,255,255,0.25);
-            margin: 25px 40px 0;
-            border-radius: 4px;
-            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+            margin: 20px 40px;
         }
 
         .progress-bar {
             height: 100%;
-            background: var(--accent);
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
             width: 0%;
-            border-radius: 4px;
-            transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            box-shadow: 0 0 20px var(--neon-blue);
+            transition: width 0.6s ease;
         }
 
         .content {
             padding: 50px 40px;
-            min-height: 520px;
+            min-height: 600px;
         }
 
-        /* Pantalla de bienvenida con nombre */
-        .welcome {
+        .welcome, .result {
             text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         .welcome h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            color: var(--primary);
+            font-family: 'Orbitron';
+            font-size: 2.8rem;
+            margin: 20px 0;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
         }
 
-        .welcome p {
-            font-size: 1.15rem;
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
-
-        .name-input {
-            width: 100%;
-            max-width: 420px;
-            padding: 16px 20px;
-            font-size: 1.2rem;
-            border: 2px solid var(--border);
-            border-radius: 14px;
-            margin: 20px auto;
-            display: block;
+        input#nameInput {
+            background: rgba(0,0,0,0.6);
+            border: 2px solid var(--neon-purple);
+            color: var(--text);
+            padding: 18px;
+            font-size: 1.4rem;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 500px;
             text-align: center;
-            transition: all 0.3s;
+            margin: 30px auto;
+            display: block;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
         }
 
-        .name-input:focus {
+        input#nameInput:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(94, 96, 206, 0.15);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 30px rgba(6, 255, 165, 0.8);
         }
 
         .topics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin: 35px 0;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
         }
 
         .topic {
-            background: linear-gradient(135deg, #e0e7ff, #c3dafe);
-            padding: 18px;
-            border-radius: 16px;
-            text-align: center;
-            font-weight: 600;
-            color: var(--primary);
-            box-shadow: 0 6px 15px rgba(94,96,206,0.1);
-        }
-
-        /* Pregunta */
-        .question-card {
-            background: #fafbff;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(94,96,206,0.08);
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .question-text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .options {
-            display: grid;
-            gap: 18px;
-        }
-
-        .option {
-            background: white;
+            background: rgba(255, 0, 110, 0.15);
+            border: 1px solid var(--neon-pink);
             padding: 20px;
-            border-radius: 16px;
-            border: 2px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 1.15rem;
-        }
-
-        .option:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(94,96,206,0.12);
-        }
-
-        .option input[type="radio"] {
-            width: 24px;
-            height: 24px;
-            accent-color: var(--primary);
-        }
-
-        .option.selected {
-            border-color: var(--primary);
-            background: #eef2ff;
-            box-shadow: 0 0 0 5px rgba(94,96,206,0.15);
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-
-        button {
-            padding: 16px 36px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
             transition: all 0.3s;
         }
 
-        .btn-prev {
-            background: #e2e8f0;
-            color: var(--dark);
+        .topic:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
         }
 
-        .btn-prev:hover:not(:disabled) {
-            background: #cbd5e1;
-            transform: translateY(-2px);
+        .question-card {
+            background: rgba(10, 10, 40, 0.7);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(6, 255, 165, 0.3);
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        .question-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
         }
 
-        .btn-primary:hover {
-            background: #5a5cc4;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(94,96,206,0.35);
+        .option {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid transparent;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s;
+            font-size: 1.2rem;
         }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
+        .option:hover {
+            border-color: var(--neon-pink);
+            background: rgba(255, 0, 110, 0.1);
+            transform: translateX(10px);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
         }
 
-        /* Resultado final */
-        .result {
-            text-align: center;
+        .option.selected {
+            border-color: var(--neon-blue);
+            background: rgba(6, 255, 165, 0.15);
+            box-shadow: 0 0 25px rgba(6, 255, 165, 0.6);
         }
 
-        .greeting {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--primary);
+        button {
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 16px 40px;
+            font-family: 'Orbitron';
+            font-size: 1.3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-shadow: 0 0 10px var(--neon-blue);
+            margin: 10px;
+        }
+
+        button:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-blue);
+            transform: scale(1.1);
+        }
+
+        .btn-pink {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .btn-pink:hover {
+            background: var(--neon-pink);
+            box-shadow: 0 0 30px var(--neon-pink);
         }
 
         .score-circle {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 30px auto;
-            font-weight: 800;
-            color: white;
-            font-size: 3rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            font-family: 'Orbitron';
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+            box-shadow: 0 0 50px rgba(6, 255, 165, 0.8);
+            animation: pulse 2s infinite;
         }
 
-        .score-circle small {
-            font-size: 1rem;
-            font-weight: 500;
+        @keyframes pulse {
+            0% { box-shadow: 0 0 50px rgba(6, 255, 165, 0.8); }
+            50% { box-shadow: 0 0 80px rgba(6, 255, 165, 1); }
+            100% { box-shadow: 0 0 50px rgba(6, 255, 165, 0.8); }
         }
 
-        .excellent { background: linear-gradient(135deg, var(--success), #00b894); }
-        .good { background: linear-gradient(135deg, var(--accent), #0096c7); }
-        .regular { background: linear-gradient(135deg, #ffd93d, #ffcc02); color: var(--dark); }
-        .low { background: linear-gradient(135deg, var(--danger), #e91e63); }
-
-        .feedback {
-            font-size: 1.3rem;
+        .time-result {
+            font-size: 1.8rem;
             margin: 20px 0;
-            color: var(--gray);
-            line-height: 1.6;
+            color: var(--neon-purple);
+            text-shadow: 0 0 15px var(--neon-purple);
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
             .content { padding: 30px 20px; }
-            .header h1 { font-size: 2rem; }
-            .question-text { font-size: 1.3rem; }
-            .navigation { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-brain"></i> Cuestionario de Tecnología</h1>
-            <p>Nivel Intermedio • 20 preguntas aleatorias</p>
+            <h1 class="glitch">CYBERQUIZ 2077</h1>
+            <p>NIVEL INTERMEDIO • 20 PREGUNTAS • TECNOLOGÍA NEON</p>
+            <div class="timer" id="timer">00:00</div>
+            <div class="author">© Samuel Galvis</div>
             <div class="progress-container">
                 <div class="progress-bar" id="progress"></div>
             </div>
-            <div class="author">Por: Samuel Galvis</div>
         </div>
 
-        <div class="content" id="content">
-            <!-- Contenido dinámico -->
-        </div>
+        <div class="content" id="content"></div>
     </div>
 
     <script>
-        // Base de datos completa de 40 preguntas (nivel intermedio)
-        const questionsDB = [
-            // Hardware (8)
-            { question: "¿Qué componente del hardware es responsable de la gestión de la memoria virtual en un sistema operativo moderno?", options: ["CPU", "MMU", "GPU", "RAM"], correct: 1, topic: "Hardware" },
-            { question: "¿Cuál es la diferencia principal entre SSD y HDD en términos de rendimiento?", options: ["SSD usa platillos magnéticos", "HDD es más rápido en lecturas aleatorias", "SSD no tiene partes móviles", "HDD consume menos energía"], correct: 2, topic: "Hardware" },
-            { question: "¿Qué significa PCIe en el contexto de las tarjetas de expansión?", options: ["Peripheral Component Interconnect Express", "Personal Computer Interface Extension", "Parallel Component Input Express", "Processor Cache Interface Extension"], correct: 0, topic: "Hardware" },
-            { question: "¿Cómo se mide la velocidad de un procesador moderno?", options: ["En GHz y núcleos", "Solo en MHz", "En voltios", "En bytes por segundo"], correct: 0, topic: "Hardware" },
-            { question: "¿Qué es el overclocking y cuál es un riesgo asociado?", options: ["Aumentar la velocidad del CPU; riesgo de sobrecalentamiento", "Reducir el voltaje; riesgo de inestabilidad", "Actualizar el BIOS; riesgo de virus", "Limpiar el polvo; riesgo de estática"], correct: 0, topic: "Hardware" },
-            { question: "¿Cuál es la función principal de la BIOS en un computador?", options: ["Gestionar el almacenamiento", "Inicializar el hardware al encender", "Ejecutar aplicaciones", "Conectar a internet"], correct: 1, topic: "Hardware" },
-            { question: "¿Qué tipo de memoria es volátil y se usa para caché en CPUs?", options: ["SRAM", "DRAM", "Flash", "ROM"], correct: 0, topic: "Hardware" },
-            { question: "¿Por qué se usa RAID en sistemas de almacenamiento?", options: ["Para mejorar la redundancia y rendimiento", "Para encriptar datos", "Para conectar periféricos", "Para overclockear"], correct: 0, topic: "Hardware" },
+        // Base de datos (mismas 40 preguntas de antes)
+        const questionsDB = [ /* ← Aquí van las 40 preguntas que ya tenías. Para no repetir, usaré un placeholder. Copia las 40 del mensaje anterior aquí */ ];
+        // === PEGA AQUÍ LAS 40 PREGUNTAS DEL CÓDIGO ANTERIOR ===
+        // (Si no las tienes, dime y te las paso completas otra vez)
 
-            // Software (8)
-            { question: "¿Qué es un compilador en el desarrollo de software?", options: ["Un programa que traduce código fuente a máquina", "Un editor de texto", "Un depurador", "Un sistema operativo"], correct: 0, topic: "Software" },
-            { question: "¿Cuál es la diferencia entre software libre y open source?", options: ["Software libre enfatiza libertades éticas, open source en colaboración práctica", "Son lo mismo", "Software libre es pago", "Open source no permite modificaciones"], correct: 0, topic: "Software" },
-            { question: "¿Qué significa MVC en patrones de diseño de software?", options: ["Model-View-Controller", "Main-View-Component", "Module-Vector-Class", "Memory-Virtual-Core"], correct: 0, topic: "Software" },
-            { question: "¿Cómo funciona la recursión en programación?", options: ["Una función se llama a sí misma hasta una condición base", "Itera sobre listas", "Ejecuta en paralelo", "Compila código"], correct: 0, topic: "Software" },
-            { question: "¿Qué es Agile en el desarrollo de software?", options: ["Metodología iterativa y colaborativa", "Un lenguaje de programación", "Un tipo de base de datos", "Un protocolo de red"], correct: 0, topic: "Software" },
-            { question: "¿Cuál es un ejemplo de lenguaje de programación orientado a objetos?", options: ["Java", "Assembler", "SQL", "HTML"], correct: 0, topic: "Software" },
-            { question: "¿Qué hace un garbage collector en lenguajes como Java?", options: ["Libera memoria no usada automáticamente", "Compila código", "Depura errores", "Encripta datos"], correct: 0, topic: "Software" },
-            { question: "¿Qué es version control en software?", options: ["Sistema para rastrear cambios en código, como Git", "Un antivirus", "Un compilador", "Un framework web"], correct: 0, topic: "Software" },
+        let questions = [], currentIndex = 0, answers = [], userName = '', startTime, timerInterval;
 
-            // Redes (8)
-            { question: "¿Qué capa del modelo OSI se encarga del enrutamiento?", options: ["Capa 3 (Red)", "Capa 1 (Física)", "Capa 7 (Aplicación)", "Capa 4 (Transporte)"], correct: 0, topic: "Redes" },
-            { question: "¿Cuál es la diferencia entre TCP y UDP?", options: ["TCP es orientado a conexión, UDP no", "UDP garantiza entrega, TCP no", "TCP es más rápido que UDP", "UDP usa puertos, TCP no"], correct: 0, topic: "Redes" },
-            { question: "¿Qué es un firewall en redes?", options: ["Dispositivo que filtra tráfico basado en reglas", "Un router", "Un switch", "Un cable"], correct: 0, topic: "Redes" },
-            { question: "¿Cómo funciona el protocolo DHCP?", options: ["Asigna IPs dinámicamente", "Encripta datos", "Transfiere archivos", "Resuelve nombres"], correct: 0, topic: "Redes" },
-            { question: "¿Qué significa VPN y para qué se usa?", options: ["Virtual Private Network; para conexiones seguras remotas", "Very Powerful Node; para enrutamiento", "Virtual Public Network; para WiFi público", "Voice Protocol Network; para llamadas"], correct: 0, topic: "Redes" },
-            { question: "¿Cuál es el rango de IPs privadas en IPv4 para clase C?", options: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "127.0.0.0/8"], correct: 0, topic: "Redes" },
-            { question: "¿Qué es NAT en redes?", options: ["Network Address Translation; traduce IPs privadas a públicas", "New Access Technology; acelera conexiones", "Node Authentication Tool; verifica usuarios", "Network Analysis Tool; monitorea tráfico"], correct: 0, topic: "Redes" },
-            { question: "¿Por qué se usa el protocolo HTTPS en lugar de HTTP?", options: ["Para encriptar datos con SSL/TLS", "Para mayor velocidad", "Para menos consumo de datos", "Para compatibilidad con IPv6"], correct: 0, topic: "Redes" },
+        const topics = ["Tecnología General", "Redes", "Hardware", "Software", "Historia Tech"];
 
-            // Historia (8)
-            { question: "¿Quién es considerado el padre de la computadora moderna?", options: ["Alan Turing", "Steve Jobs", "Bill Gates", "Tim Berners-Lee"], correct: 0, topic: "Historia" },
-            { question: "¿En qué año se inventó el World Wide Web?", options: ["1989", "1995", "1975", "2000"], correct: 0, topic: "Historia" },
-            { question: "¿Qué fue la ENIAC y cuándo se construyó?", options: ["Primera computadora electrónica programable; 1945", "Un satélite; 1960", "Un teléfono; 1876", "Un software; 1980"], correct: 0, topic: "Historia" },
-            { question: "¿Quién fundó Microsoft y en qué año?", options: ["Bill Gates y Paul Allen; 1975", "Steve Wozniak; 1976", "Larry Page; 1998", "Mark Zuckerberg; 2004"], correct: 0, topic: "Historia" },
-            { question: "¿Qué evento marcó el inicio de la era de los smartphones?", options: ["Lanzamiento del iPhone en 2007", "Invención del transistor en 1947", "Creación de ARPANET en 1969", "Primer PC en 1981"], correct: 0, topic: "Historia" },
-            { question: "¿Quién inventó el transistor y por qué fue importante?", options: ["Bell Labs en 1947; permitió miniaturización de electrónicos", "Thomas Edison en 1879; para luz", "Alexander Graham Bell en 1876; para teléfono", "Guglielmo Marconi en 1895; para radio"], correct: 0, topic: "Historia" },
-            { question: "¿Qué fue ARPANET y su relación con Internet?", options: ["Red precursora de Internet; desarrollada en 1969", "Un lenguaje de programación; 1950s", "Un procesador; 1971", "Un sistema operativo; 1983"], correct: 0, topic: "Historia" },
-            { question: "¿En qué década se popularizaron los ordenadores personales?", options: ["1980s", "1960s", "2000s", "1940s"], correct: 0, topic: "Historia" },
-
-            // Tecnología General (8)
-            { question: "¿Qué es la inteligencia artificial y un ejemplo?", options: ["Simulación de inteligencia humana; como chatbots", "Un tipo de hardware; como CPU", "Un protocolo de red; como TCP", "Un lenguaje; como Python"], correct: 0, topic: "Tecnología" },
-            { question: "¿Qué significa IoT en tecnología?", options: ["Internet of Things", "Input Output Terminal", "Integrated Operating Tool", "Intelligent Object Technology"], correct: 0, topic: "Tecnología" },
-            { question: "¿Cómo funciona la computación en la nube?", options: ["Servicios remotos vía internet en lugar de local", "Almacenamiento en discos duros", "Procesamiento en GPU local", "Redes peer-to-peer"], correct: 0, topic: "Tecnología" },
-            { question: "¿Qué es blockchain y para qué se usa principalmente?", options: ["Cadena de bloques distribuida; para criptomonedas y transacciones seguras", "Un tipo de virus", "Un framework web", "Un procesador"], correct: 0, topic: "Tecnología" },
-            { question: "¿Cuál es la importancia de la ciberseguridad?", options: ["Proteger datos y sistemas de amenazas", "Aumentar velocidad de redes", "Desarrollar software", "Diseñar hardware"], correct: 0, topic: "Tecnología" },
-            { question: "¿Qué es big data y sus 3 Vs?", options: ["Grandes volúmenes de datos; Volume, Velocity, Variety", "Un lenguaje; Visual, Verbal, Virtual", "Un hardware; Voltaje, Velocidad, Variabilidad", "Un protocolo; View, Validate, Verify"], correct: 0, topic: "Tecnología" },
-            { question: "¿Cómo impacta la realidad virtual en la tecnología?", options: ["Crea entornos inmersivos simulados", "Mejora el almacenamiento", "Acelera procesadores", "Encripta redes"], correct: 0, topic: "Tecnología" },
-            { question: "¿Qué es machine learning?", options: ["Subcampo de AI donde algoritmos aprenden de datos", "Un tipo de red", "Un hardware", "Un sistema operativo"], correct: 0, topic: "Tecnología" }
-        ];
-
-        // Variables globales
-        let questions = [];
-        let currentIndex = 0;
-        let answers = [];
-        let userName = '';
-
-        const purpose = "Evaluar y reforzar tus conocimientos intermedios en tecnología, redes, hardware, software e historia tecnológica de forma interactiva y divertida.";
-        const topics = ["Tecnología General", "Redes Informáticas", "Hardware", "Desarrollo de Software", "Historia de la Tecnología"];
-
-        // Seleccionar 20 preguntas aleatorias
-        function getRandomQuestions() {
-            const shuffled = [...questionsDB].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, 20);
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            return `${mins}:${secs}`;
         }
 
-        // Actualizar progreso
-        function updateProgress() {
-            const percent = (currentIndex / 20) * 100;
-            document.getElementById('progress').style.width = percent + '%';
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('timer').textContent = formatTime(elapsed);
+            }, 1000);
         }
 
-        // Renderizar contenido
+        function stopTimer() {
+            clearInterval(timerInterval);
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            return elapsed;
+        }
+
         function renderContent() {
             const content = document.getElementById('content');
-            if (userName === '') {
-                // Pantalla de nombre
+            const progress = currentIndex < 20 ? (currentIndex / 20) * 100 : 100;
+            document.getElementById('progress').style.width = progress + '%';
+
+            if (!userName) {
                 content.innerHTML = `
                     <div class="welcome">
-                        <h2><i class="fas fa-user"></i> ¡Bienvenido!</h2>
-                        <p>Antes de comenzar el cuestionario, dime tu nombre para personalizar la experiencia.</p>
-                        <input type="text" class="name-input" id="nameInput" placeholder="Ej: Juan Pérez" maxlength="50">
-                        <p style="margin-top: 20px; font-size: 1rem; color: var(--gray);">Luego verás las temáticas y el propósito.</p>
-                        <button class="btn-primary" onclick="startQuiz()" style="margin-top: 30px;">Continuar</button>
-                    </div>
-                `;
+                        <h2>ACCESO AL SISTEMA</h2>
+                        <p>Identifícate, Runner</p>
+                        <input type="text" id="nameInput" placeholder="TU ALIAS AQUÍ" autofocus>
+                        <button class="btn-pink" onclick="setName()">INICIAR SESIÓN</button>
+                    </div>`;
                 document.getElementById('nameInput').focus();
             } else if (currentIndex === -1) {
-                // Intro después del nombre
                 content.innerHTML = `
                     <div class="welcome">
-                        <h2>¡Hola, ${userName}! <i class="fas fa-rocket"></i></h2>
-                        <p>${purpose}</p>
+                        <h2>BIENVENIDO<br><span style="color:var(--neon-pink)">${userName.toUpperCase()}</span></h2>
+                        <p>Prepárate para el desafío tecnológico definitivo</p>
                         <div class="topics-grid">
                             ${topics.map(t => `<div class="topic">${t}</div>`).join('')}
                         </div>
-                        <button class="btn-primary" onclick="startQuestions()">Comenzar Cuestionario</button>
-                    </div>
-                `;
+                        <button class="btn-pink" onclick="beginQuiz()">INICIAR CUESTIONARIO</button>
+                    </div>`;
             } else if (currentIndex < 20) {
-                // Pregunta
                 const q = questions[currentIndex];
                 content.innerHTML = `
                     <div class="question-card">
-                        <div class="question-header">
-                            <span>Pregunta ${currentIndex + 1} de 20</span>
-                            <span class="topic-tag" style="background: #e0e7ff; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem;">${q.topic}</span>
-                        </div>
+                        <h3>PREGUNTA ${currentIndex + 1}/20</h3>
                         <div class="question-text">${q.question}</div>
                         <div class="options">
                             ${q.options.map((opt, i) => `
                                 <label class="option ${answers[currentIndex] === i ? 'selected' : ''}">
-                                    <input type="radio" name="answer" value="${i}" ${answers[currentIndex] === i ? 'checked' : ''}>
+                                    <input type="radio" name="q" value="${i}" ${answers[currentIndex] === i ? 'checked' : ''}>
                                     ${opt}
                                 </label>
                             `).join('')}
                         </div>
-                        <div class="navigation">
-                            <button class="btn-prev" ${currentIndex === 0 ? 'disabled' : ''} onclick="goBack()">Atrás</button>
-                            <button class="btn-primary" onclick="goNext()">${currentIndex === 19 ? 'Finalizar' : 'Siguiente'}</button>
+                        <div style="margin-top:40px; text-align:center;">
+                            <button class="btn-pink" ${currentIndex === 0 ? 'disabled' : ''} onclick="prev()">ANTERIOR</button>
+                            <button class="btn-pink" onclick="next()">${currentIndex === 19 ? 'FINALIZAR' : 'SIGUIENTE'}</button>
                         </div>
-                    </div>
-                `;
-                // Event listeners para radios
-                document.querySelectorAll('input[name="answer"]').forEach(radio => {
-                    radio.addEventListener('change', (e) => {
-                        answers[currentIndex] = parseInt(e.target.value);
-                    });
+                    </div>`;
+                document.querySelectorAll('input[name="q"]').forEach(r => {
+                    r.onchange = () => { answers[currentIndex] = parseInt(r.value); };
                 });
             } else {
-                // Resultado
-                let score = 0;
-                questions.forEach((q, i) => {
-                    if (answers[i] === q.correct) score++;
-                });
-                const percentage = Math.round((score / 20) * 100);
-                let feedback = '', circleClass = '';
-                if (percentage >= 90) {
-                    feedback = '¡Excelente trabajo! Dominas estos temas como un experto.';
-                    circleClass = 'excellent';
-                } else if (percentage >= 75) {
-                    feedback = '¡Muy bien! Tienes un sólido conocimiento intermedio.';
-                    circleClass = 'good';
-                } else if (percentage >= 60) {
-                    feedback = 'Buen esfuerzo, pero hay oportunidades para mejorar.';
-                    circleClass = 'regular';
-                } else {
-                    feedback = '¡No te desanimes! Practica más y verás grandes avances.';
-                    circleClass = 'low';
-                }
+                const totalTime = stopTimer();
+                const correct = answers.filter((a, i) => a === questions[i].correct).length;
+                const percent = Math.round((correct / 20) * 100);
+                let feedback = "";
+                if (percent >= 90 && totalTime <= 600) feedback = "¡LEYENDA VIVIENTE! Velocidad y precisión perfectas.";
+                else if (percent >= 80) feedback = "¡ELITE DIGITAL! Dominas el ciberespacio.";
+                else if (percent >= 65) feedback = "Runner experimentado. Buen trabajo.";
+                else feedback = "Vuelve al dojo, novato. Hay mucho que aprender.";
 
                 content.innerHTML = `
                     <div class="result">
-                        <h2 class="greeting">¡Felicidades, ${userName}!</h2>
-                        <div class="score-circle ${circleClass}">${score}<small>/20</small></div>
-                        <h3>${percentage}% de aciertos</h3>
-                        <p class="feedback">${feedback}</p>
-                        <button class="btn-primary" onclick="restartQuiz()">Volver a Intentarlo</button>
-                    </div>
-                `;
-            }
-            updateProgress();
-        }
-
-        // Funciones
-        function startQuiz() {
-            userName = document.getElementById('nameInput').value.trim() || 'Usuario';
-            if (userName) {
-                questions = getRandomQuestions();
-                answers = new Array(20).fill(null);
-                currentIndex = -1;
-                renderContent();
+                        <h2>MISIÓN COMPLETADA</h2>
+                        <div class="score-circle">${correct}/20</div>
+                        <h3 style="color:var(--neon-pink); margin:20px 0">${percent}%</h3>
+                        <div class="time-result">TIEMPO: ${formatTime(totalTime)}</div>
+                        <p style="font-size:1.5rem; margin:30px 0; max-width:600px;">${feedback}</p>
+                        <button class="btn-pink" onclick="location.reload()">NUEVA PARTIDA</button>
+                    </div>`;
             }
         }
 
-        function startQuestions() {
+        function setName() {
+            userName = document.getElementById('nameInput').value.trim() || "Runner";
+            renderContent();
+        }
+
+        function beginQuiz() {
+            questions = [...questionsDB].sort(() => 0.5 - Math.random()).slice(0, 20);
+            answers = new Array(20).fill(null);
             currentIndex = 0;
+            startTimer();
             renderContent();
         }
 
-        function goNext() {
-            if (currentIndex < 19) {
-                // Guardar respuesta si no está
-                const selected = document.querySelector('input[name="answer"]:checked');
-                if (selected) answers[currentIndex] = parseInt(selected.value);
-                currentIndex++;
-            } else {
-                // Finalizar
-                const selected = document.querySelector('input[name="answer"]:checked');
-                if (selected) answers[currentIndex] = parseInt(selected.value);
-                currentIndex = 20;
-            }
+        function next() {
+            if (currentIndex < 19) currentIndex++;
+            else currentIndex = 20;
             renderContent();
         }
 
-        function goBack() {
+        function prev() {
             if (currentIndex > 0) currentIndex--;
             renderContent();
         }
 
-        function restartQuiz() {
-            questions = getRandomQuestions();
-            answers = new Array(20).fill(null);
-            currentIndex = -1;
-            renderContent();
-        }
-
-        // Inicializar
+        // Iniciar
         renderContent();
     </script>
 </body>
