@@ -273,4 +273,259 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        .excellent { background: linear-gradient(135deg, #...
+        .score-circle small {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .excellent { background: linear-gradient(135deg, var(--success), #00b894); }
+        .good { background: linear-gradient(135deg, var(--accent), #0096c7); }
+        .regular { background: linear-gradient(135deg, #ffd93d, #ffcc02); color: var(--dark); }
+        .low { background: linear-gradient(135deg, var(--danger), #e91e63); }
+
+        .feedback {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .content { padding: 30px 20px; }
+            .header h1 { font-size: 2rem; }
+            .question-text { font-size: 1.3rem; }
+            .navigation { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-brain"></i> Cuestionario de Tecnología</h1>
+            <p>Nivel Intermedio • 20 preguntas aleatorias</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress"></div>
+            </div>
+            <div class="author">Por: Samuel Galvis</div>
+        </div>
+
+        <div class="content" id="content">
+            <!-- Contenido dinámico -->
+        </div>
+    </div>
+
+    <script>
+        // Base de datos completa de 40 preguntas (nivel intermedio)
+        const questionsDB = [
+            // Hardware (8)
+            { question: "¿Qué componente del hardware es responsable de la gestión de la memoria virtual en un sistema operativo moderno?", options: ["CPU", "MMU", "GPU", "RAM"], correct: 1, topic: "Hardware" },
+            { question: "¿Cuál es la diferencia principal entre SSD y HDD en términos de rendimiento?", options: ["SSD usa platillos magnéticos", "HDD es más rápido en lecturas aleatorias", "SSD no tiene partes móviles", "HDD consume menos energía"], correct: 2, topic: "Hardware" },
+            { question: "¿Qué significa PCIe en el contexto de las tarjetas de expansión?", options: ["Peripheral Component Interconnect Express", "Personal Computer Interface Extension", "Parallel Component Input Express", "Processor Cache Interface Extension"], correct: 0, topic: "Hardware" },
+            { question: "¿Cómo se mide la velocidad de un procesador moderno?", options: ["En GHz y núcleos", "Solo en MHz", "En voltios", "En bytes por segundo"], correct: 0, topic: "Hardware" },
+            { question: "¿Qué es el overclocking y cuál es un riesgo asociado?", options: ["Aumentar la velocidad del CPU; riesgo de sobrecalentamiento", "Reducir el voltaje; riesgo de inestabilidad", "Actualizar el BIOS; riesgo de virus", "Limpiar el polvo; riesgo de estática"], correct: 0, topic: "Hardware" },
+            { question: "¿Cuál es la función principal de la BIOS en un computador?", options: ["Gestionar el almacenamiento", "Inicializar el hardware al encender", "Ejecutar aplicaciones", "Conectar a internet"], correct: 1, topic: "Hardware" },
+            { question: "¿Qué tipo de memoria es volátil y se usa para caché en CPUs?", options: ["SRAM", "DRAM", "Flash", "ROM"], correct: 0, topic: "Hardware" },
+            { question: "¿Por qué se usa RAID en sistemas de almacenamiento?", options: ["Para mejorar la redundancia y rendimiento", "Para encriptar datos", "Para conectar periféricos", "Para overclockear"], correct: 0, topic: "Hardware" },
+
+            // Software (8)
+            { question: "¿Qué es un compilador en el desarrollo de software?", options: ["Un programa que traduce código fuente a máquina", "Un editor de texto", "Un depurador", "Un sistema operativo"], correct: 0, topic: "Software" },
+            { question: "¿Cuál es la diferencia entre software libre y open source?", options: ["Software libre enfatiza libertades éticas, open source en colaboración práctica", "Son lo mismo", "Software libre es pago", "Open source no permite modificaciones"], correct: 0, topic: "Software" },
+            { question: "¿Qué significa MVC en patrones de diseño de software?", options: ["Model-View-Controller", "Main-View-Component", "Module-Vector-Class", "Memory-Virtual-Core"], correct: 0, topic: "Software" },
+            { question: "¿Cómo funciona la recursión en programación?", options: ["Una función se llama a sí misma hasta una condición base", "Itera sobre listas", "Ejecuta en paralelo", "Compila código"], correct: 0, topic: "Software" },
+            { question: "¿Qué es Agile en el desarrollo de software?", options: ["Metodología iterativa y colaborativa", "Un lenguaje de programación", "Un tipo de base de datos", "Un protocolo de red"], correct: 0, topic: "Software" },
+            { question: "¿Cuál es un ejemplo de lenguaje de programación orientado a objetos?", options: ["Java", "Assembler", "SQL", "HTML"], correct: 0, topic: "Software" },
+            { question: "¿Qué hace un garbage collector en lenguajes como Java?", options: ["Libera memoria no usada automáticamente", "Compila código", "Depura errores", "Encripta datos"], correct: 0, topic: "Software" },
+            { question: "¿Qué es version control en software?", options: ["Sistema para rastrear cambios en código, como Git", "Un antivirus", "Un compilador", "Un framework web"], correct: 0, topic: "Software" },
+
+            // Redes (8)
+            { question: "¿Qué capa del modelo OSI se encarga del enrutamiento?", options: ["Capa 3 (Red)", "Capa 1 (Física)", "Capa 7 (Aplicación)", "Capa 4 (Transporte)"], correct: 0, topic: "Redes" },
+            { question: "¿Cuál es la diferencia entre TCP y UDP?", options: ["TCP es orientado a conexión, UDP no", "UDP garantiza entrega, TCP no", "TCP es más rápido que UDP", "UDP usa puertos, TCP no"], correct: 0, topic: "Redes" },
+            { question: "¿Qué es un firewall en redes?", options: ["Dispositivo que filtra tráfico basado en reglas", "Un router", "Un switch", "Un cable"], correct: 0, topic: "Redes" },
+            { question: "¿Cómo funciona el protocolo DHCP?", options: ["Asigna IPs dinámicamente", "Encripta datos", "Transfiere archivos", "Resuelve nombres"], correct: 0, topic: "Redes" },
+            { question: "¿Qué significa VPN y para qué se usa?", options: ["Virtual Private Network; para conexiones seguras remotas", "Very Powerful Node; para enrutamiento", "Virtual Public Network; para WiFi público", "Voice Protocol Network; para llamadas"], correct: 0, topic: "Redes" },
+            { question: "¿Cuál es el rango de IPs privadas en IPv4 para clase C?", options: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "127.0.0.0/8"], correct: 0, topic: "Redes" },
+            { question: "¿Qué es NAT en redes?", options: ["Network Address Translation; traduce IPs privadas a públicas", "New Access Technology; acelera conexiones", "Node Authentication Tool; verifica usuarios", "Network Analysis Tool; monitorea tráfico"], correct: 0, topic: "Redes" },
+            { question: "¿Por qué se usa el protocolo HTTPS en lugar de HTTP?", options: ["Para encriptar datos con SSL/TLS", "Para mayor velocidad", "Para menos consumo de datos", "Para compatibilidad con IPv6"], correct: 0, topic: "Redes" },
+
+            // Historia (8)
+            { question: "¿Quién es considerado el padre de la computadora moderna?", options: ["Alan Turing", "Steve Jobs", "Bill Gates", "Tim Berners-Lee"], correct: 0, topic: "Historia" },
+            { question: "¿En qué año se inventó el World Wide Web?", options: ["1989", "1995", "1975", "2000"], correct: 0, topic: "Historia" },
+            { question: "¿Qué fue la ENIAC y cuándo se construyó?", options: ["Primera computadora electrónica programable; 1945", "Un satélite; 1960", "Un teléfono; 1876", "Un software; 1980"], correct: 0, topic: "Historia" },
+            { question: "¿Quién fundó Microsoft y en qué año?", options: ["Bill Gates y Paul Allen; 1975", "Steve Wozniak; 1976", "Larry Page; 1998", "Mark Zuckerberg; 2004"], correct: 0, topic: "Historia" },
+            { question: "¿Qué evento marcó el inicio de la era de los smartphones?", options: ["Lanzamiento del iPhone en 2007", "Invención del transistor en 1947", "Creación de ARPANET en 1969", "Primer PC en 1981"], correct: 0, topic: "Historia" },
+            { question: "¿Quién inventó el transistor y por qué fue importante?", options: ["Bell Labs en 1947; permitió miniaturización de electrónicos", "Thomas Edison en 1879; para luz", "Alexander Graham Bell en 1876; para teléfono", "Guglielmo Marconi en 1895; para radio"], correct: 0, topic: "Historia" },
+            { question: "¿Qué fue ARPANET y su relación con Internet?", options: ["Red precursora de Internet; desarrollada en 1969", "Un lenguaje de programación; 1950s", "Un procesador; 1971", "Un sistema operativo; 1983"], correct: 0, topic: "Historia" },
+            { question: "¿En qué década se popularizaron los ordenadores personales?", options: ["1980s", "1960s", "2000s", "1940s"], correct: 0, topic: "Historia" },
+
+            // Tecnología General (8)
+            { question: "¿Qué es la inteligencia artificial y un ejemplo?", options: ["Simulación de inteligencia humana; como chatbots", "Un tipo de hardware; como CPU", "Un protocolo de red; como TCP", "Un lenguaje; como Python"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué significa IoT en tecnología?", options: ["Internet of Things", "Input Output Terminal", "Integrated Operating Tool", "Intelligent Object Technology"], correct: 0, topic: "Tecnología" },
+            { question: "¿Cómo funciona la computación en la nube?", options: ["Servicios remotos vía internet en lugar de local", "Almacenamiento en discos duros", "Procesamiento en GPU local", "Redes peer-to-peer"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué es blockchain y para qué se usa principalmente?", options: ["Cadena de bloques distribuida; para criptomonedas y transacciones seguras", "Un tipo de virus", "Un framework web", "Un procesador"], correct: 0, topic: "Tecnología" },
+            { question: "¿Cuál es la importancia de la ciberseguridad?", options: ["Proteger datos y sistemas de amenazas", "Aumentar velocidad de redes", "Desarrollar software", "Diseñar hardware"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué es big data y sus 3 Vs?", options: ["Grandes volúmenes de datos; Volume, Velocity, Variety", "Un lenguaje; Visual, Verbal, Virtual", "Un hardware; Voltaje, Velocidad, Variabilidad", "Un protocolo; View, Validate, Verify"], correct: 0, topic: "Tecnología" },
+            { question: "¿Cómo impacta la realidad virtual en la tecnología?", options: ["Crea entornos inmersivos simulados", "Mejora el almacenamiento", "Acelera procesadores", "Encripta redes"], correct: 0, topic: "Tecnología" },
+            { question: "¿Qué es machine learning?", options: ["Subcampo de AI donde algoritmos aprenden de datos", "Un tipo de red", "Un hardware", "Un sistema operativo"], correct: 0, topic: "Tecnología" }
+        ];
+
+        // Variables globales
+        let questions = [];
+        let currentIndex = 0;
+        let answers = [];
+        let userName = '';
+
+        const purpose = "Evaluar y reforzar tus conocimientos intermedios en tecnología, redes, hardware, software e historia tecnológica de forma interactiva y divertida.";
+        const topics = ["Tecnología General", "Redes Informáticas", "Hardware", "Desarrollo de Software", "Historia de la Tecnología"];
+
+        // Seleccionar 20 preguntas aleatorias
+        function getRandomQuestions() {
+            const shuffled = [...questionsDB].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 20);
+        }
+
+        // Actualizar progreso
+        function updateProgress() {
+            const percent = (currentIndex / 20) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        // Renderizar contenido
+        function renderContent() {
+            const content = document.getElementById('content');
+            if (userName === '') {
+                // Pantalla de nombre
+                content.innerHTML = `
+                    <div class="welcome">
+                        <h2><i class="fas fa-user"></i> ¡Bienvenido!</h2>
+                        <p>Antes de comenzar el cuestionario, dime tu nombre para personalizar la experiencia.</p>
+                        <input type="text" class="name-input" id="nameInput" placeholder="Ej: Juan Pérez" maxlength="50">
+                        <p style="margin-top: 20px; font-size: 1rem; color: var(--gray);">Luego verás las temáticas y el propósito.</p>
+                        <button class="btn-primary" onclick="startQuiz()" style="margin-top: 30px;">Continuar</button>
+                    </div>
+                `;
+                document.getElementById('nameInput').focus();
+            } else if (currentIndex === -1) {
+                // Intro después del nombre
+                content.innerHTML = `
+                    <div class="welcome">
+                        <h2>¡Hola, ${userName}! <i class="fas fa-rocket"></i></h2>
+                        <p>${purpose}</p>
+                        <div class="topics-grid">
+                            ${topics.map(t => `<div class="topic">${t}</div>`).join('')}
+                        </div>
+                        <button class="btn-primary" onclick="startQuestions()">Comenzar Cuestionario</button>
+                    </div>
+                `;
+            } else if (currentIndex < 20) {
+                // Pregunta
+                const q = questions[currentIndex];
+                content.innerHTML = `
+                    <div class="question-card">
+                        <div class="question-header">
+                            <span>Pregunta ${currentIndex + 1} de 20</span>
+                            <span class="topic-tag" style="background: #e0e7ff; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem;">${q.topic}</span>
+                        </div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="options">
+                            ${q.options.map((opt, i) => `
+                                <label class="option ${answers[currentIndex] === i ? 'selected' : ''}">
+                                    <input type="radio" name="answer" value="${i}" ${answers[currentIndex] === i ? 'checked' : ''}>
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="navigation">
+                            <button class="btn-prev" ${currentIndex === 0 ? 'disabled' : ''} onclick="goBack()">Atrás</button>
+                            <button class="btn-primary" onclick="goNext()">${currentIndex === 19 ? 'Finalizar' : 'Siguiente'}</button>
+                        </div>
+                    </div>
+                `;
+                // Event listeners para radios
+                document.querySelectorAll('input[name="answer"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        answers[currentIndex] = parseInt(e.target.value);
+                    });
+                });
+            } else {
+                // Resultado
+                let score = 0;
+                questions.forEach((q, i) => {
+                    if (answers[i] === q.correct) score++;
+                });
+                const percentage = Math.round((score / 20) * 100);
+                let feedback = '', circleClass = '';
+                if (percentage >= 90) {
+                    feedback = '¡Excelente trabajo! Dominas estos temas como un experto.';
+                    circleClass = 'excellent';
+                } else if (percentage >= 75) {
+                    feedback = '¡Muy bien! Tienes un sólido conocimiento intermedio.';
+                    circleClass = 'good';
+                } else if (percentage >= 60) {
+                    feedback = 'Buen esfuerzo, pero hay oportunidades para mejorar.';
+                    circleClass = 'regular';
+                } else {
+                    feedback = '¡No te desanimes! Practica más y verás grandes avances.';
+                    circleClass = 'low';
+                }
+
+                content.innerHTML = `
+                    <div class="result">
+                        <h2 class="greeting">¡Felicidades, ${userName}!</h2>
+                        <div class="score-circle ${circleClass}">${score}<small>/20</small></div>
+                        <h3>${percentage}% de aciertos</h3>
+                        <p class="feedback">${feedback}</p>
+                        <button class="btn-primary" onclick="restartQuiz()">Volver a Intentarlo</button>
+                    </div>
+                `;
+            }
+            updateProgress();
+        }
+
+        // Funciones
+        function startQuiz() {
+            userName = document.getElementById('nameInput').value.trim() || 'Usuario';
+            if (userName) {
+                questions = getRandomQuestions();
+                answers = new Array(20).fill(null);
+                currentIndex = -1;
+                renderContent();
+            }
+        }
+
+        function startQuestions() {
+            currentIndex = 0;
+            renderContent();
+        }
+
+        function goNext() {
+            if (currentIndex < 19) {
+                // Guardar respuesta si no está
+                const selected = document.querySelector('input[name="answer"]:checked');
+                if (selected) answers[currentIndex] = parseInt(selected.value);
+                currentIndex++;
+            } else {
+                // Finalizar
+                const selected = document.querySelector('input[name="answer"]:checked');
+                if (selected) answers[currentIndex] = parseInt(selected.value);
+                currentIndex = 20;
+            }
+            renderContent();
+        }
+
+        function goBack() {
+            if (currentIndex > 0) currentIndex--;
+            renderContent();
+        }
+
+        function restartQuiz() {
+            questions = getRandomQuestions();
+            answers = new Array(20).fill(null);
+            currentIndex = -1;
+            renderContent();
+        }
+
+        // Inicializar
+        renderContent();
+    </script>
+</body>
+</html>
