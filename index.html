@@ -4,262 +4,304 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberQuiz - La Matriz Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
     <style>
-        /* Estilos CSS con temática Cyberpunk */
+        /* Importación de fuentes */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
+
         :root {
-            --color-fondo: #0a0a0f;
-            --color-neon-azul: #00ffff;
-            --color-neon-rosa: #ff00ff;
-            --color-texto: #e0e0e0;
-            --color-borde: #333;
+            --color-bg-dark: #0f0f1a;
+            --color-neon-blue: #00ffff;
+            --color-neon-pink: #ff00ff;
+            --color-text-light: #e0e0e0;
+            --color-accent-green: #00ff00;
+            --color-error-red: #ff3366;
         }
 
         body {
-            font-family: 'Consolas', monospace;
-            background-color: var(--color-fondo);
-            color: var(--color-texto);
-            margin: 0;
-            padding: 20px;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-light);
+            font-family: 'Share Tech Mono', monospace;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        .cyber-container {
+        #quiz-container {
             width: 100%;
-            max-width: 900px;
-            background: #15151f;
-            border: 2px solid var(--color-neon-azul);
-            box-shadow: 0 0 20px var(--color-neon-azul);
+            max-width: 800px;
             padding: 30px;
+            border: 2px solid var(--color-neon-blue);
+            box-shadow: 0 0 40px var(--color-neon-blue), 0 0 10px var(--color-neon-pink) inset;
+            background: rgba(15, 15, 26, 0.85);
             border-radius: 10px;
         }
 
-        h1, h2, h3 {
-            color: var(--color-neon-rosa);
-            text-shadow: 0 0 5px var(--color-neon-rosa);
-            border-bottom: 1px solid var(--color-neon-azul);
-            padding-bottom: 5px;
-        }
-        
-        .header-info {
-            display: flex;
-            justify-content: space-between;
+        /* Estilo de texto Neon */
+        .neon-text {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--color-neon-blue);
+            text-shadow: 0 0 5px var(--color-neon-blue), 0 0 10px var(--color-neon-blue);
             margin-bottom: 20px;
-            padding: 10px 0;
-            border-bottom: 1px dashed var(--color-borde);
         }
 
-        .header-info span {
-            color: var(--color-neon-azul);
-            font-size: 0.9em;
-        }
-
-        /* Pregunta y Opciones */
-        .question-box {
-            margin: 20px 0;
+        /* Bloque de Información de Inicio/Resultados */
+        .info-block {
             padding: 15px;
-            border: 1px solid var(--color-borde);
-            border-radius: 5px;
-            background: #0d0d15;
+            border: 1px dashed var(--color-neon-pink);
+            margin-bottom: 20px;
+            background: rgba(255, 0, 255, 0.05);
         }
 
-        .options-group label {
-            display: block;
-            background: #252530;
-            margin: 8px 0;
-            padding: 12px;
-            border-radius: 5px;
-            transition: background 0.3s, border 0.3s;
+        .info-block h2, .info-block h3 {
+            color: var(--color-accent-green);
+            text-shadow: none;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .info-block ul {
+            list-style-type: '⚡ ';
+            padding-left: 20px;
+        }
+
+        .info-block hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-neon-blue), transparent);
+            margin: 15px 0;
+        }
+
+        /* Botones de Acción */
+        .action-button, .jarvis-button, .nav-button {
             cursor: pointer;
-            border-left: 5px solid var(--color-neon-rosa);
-        }
-
-        .options-group label:hover {
-            background: #3a3a4a;
-        }
-
-        .options-group input[type="radio"] {
-            margin-right: 10px;
-        }
-        
-        /* Botones */
-        .controls, .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .controls {
-            padding: 15px;
-            border-top: 1px solid var(--color-borde);
-        }
-
-        .cyber-button {
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            margin: 5px;
+            border: 2px solid var(--color-neon-blue);
+            background: transparent;
+            color: var(--color-neon-blue);
             text-transform: uppercase;
-            font-weight: bold;
-            transition: background 0.3s, box-shadow 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px var(--color-neon-blue);
         }
 
-        .btn-jarvis {
-            background-color: var(--color-neon-azul);
-            color: var(--color-fondo);
-            box-shadow: 0 0 10px var(--color-neon-azul);
+        .action-button:hover, .jarvis-button:hover, .nav-button:hover {
+            background: var(--color-neon-blue);
+            color: var(--color-bg-dark);
+            box-shadow: 0 0 15px var(--color-neon-blue);
         }
 
-        .btn-jarvis:hover:not(:disabled) {
-            background-color: #33ffff;
-            box-shadow: 0 0 15px #33ffff;
-        }
-        
-        .btn-nav {
-            background-color: var(--color-neon-rosa);
-            color: var(--color-fondo);
-            box-shadow: 0 0 10px var(--color-neon-rosa);
-        }
-
-        .btn-nav:hover:not(:disabled) {
-            background-color: #ff33ff;
-            box-shadow: 0 0 15px #ff33ff;
-        }
-
-        .cyber-button:disabled {
-            background-color: #333;
-            color: #777;
+        .action-button:disabled, .nav-button:disabled, .jarvis-button:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
+            background: transparent;
+            color: var(--color-text-light);
+            border: 2px solid var(--color-text-light);
             box-shadow: none;
         }
 
-        /* JARVIS y Pista */
-        #jarvis-console {
-            margin-top: 20px;
+        /* Estilo de la barra de estadísticas */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--color-neon-pink);
+            border-bottom: 1px solid var(--color-neon-pink);
+            background: rgba(255, 0, 255, 0.05);
+        }
+
+        .stats-bar strong {
+            color: var(--color-accent-green);
+        }
+
+        /* Pregunta y Opciones */
+        #question-area {
+            margin-bottom: 30px;
             padding: 15px;
-            border: 1px dashed var(--color-neon-azul);
-            background: #000510;
-            min-height: 50px;
+            border: 1px solid var(--color-neon-blue);
         }
-        
-        /* Resultados */
-        .results-section h3 {
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
+
+        #question-text {
+            font-size: 1.2em;
+            color: var(--color-text-light);
+            margin-bottom: 15px;
         }
-        
-        .result-table {
+
+        #options-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option-button {
+            text-align: left;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border: 1px solid var(--color-neon-blue);
+            background: rgba(0, 255, 255, 0.05);
+            color: var(--color-text-light);
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-button:hover:not(.disabled) {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: var(--color-neon-pink);
+        }
+
+        .option-button.selected {
+            border-color: var(--color-accent-green);
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .option-button.disabled {
+            opacity: 0.3;
+            cursor: default;
+            background: rgba(255, 51, 102, 0.05);
+            border-color: var(--color-error-red);
+        }
+
+        /* Área de JARVIS */
+        #jarvis-area {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #jarvis-feedback {
+            margin-top: 10px;
+            color: var(--color-neon-pink);
+        }
+
+        /* Botones de Navegación */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-button {
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+
+        /* Tabla de Resultados */
+        table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
             font-size: 0.9em;
         }
-        
-        .result-table th, .result-table td {
-            border: 1px solid var(--color-borde);
+
+        table th, table td {
+            border: 1px solid var(--color-neon-blue);
             padding: 8px;
             text-align: left;
         }
-        
-        .result-table th {
-            background-color: #252530;
-            color: var(--color-neon-azul);
+
+        table th {
+            background-color: rgba(0, 255, 255, 0.1);
+            color: var(--color-neon-blue);
+            font-family: 'Orbitron', sans-serif;
         }
-        
+
         .correct-answer {
-            color: #00ff00;
+            color: var(--color-accent-green);
         }
-        
+
         .incorrect-answer {
-            color: #ff4444;
-            font-weight: bold;
-        }
-
-        /* Lógica para 50/50 */
-        .option-removed {
-            display: none !important;
-        }
-
-        .hidden {
-            display: none;
+            color: var(--color-error-red);
         }
     </style>
 </head>
 <body>
 
-    <div class="cyber-container">
+    <div id="quiz-container">
         
         <div id="start-screen">
-            <h1>Bienvenido, Netrunner</h1>
-            <h2>Proyecto: Cuestionario Cyberpunk - La Matriz Digital</h2>
-            <p><strong>Autor:</strong> Samuel Galvis</p>
-            <p><strong>Propósito:</strong> Evaluar y reforzar tu conocimiento en la infraestructura tecnológica del futuro distópico.</p>
+            <h1 class="neon-text">CyberQuiz - La Matriz Digital</h1>
             
-            <h3>Temáticas del Cuestionario</h3>
-            <ul>
-                <li><strong>Hardware Ciber-mejorado:</strong> Componentes físicos clave, interfaces neurales e implantes.</li>
-                <li><strong>Redes y Netrunning:</strong> La infraestructura de la red global, protocolos y seguridad.</li>
-                <li><strong>Software y IA:</strong> Sistemas operativos, virus informáticos avanzados e Inteligencias Artificiales.</li>
-                <li><strong>Historia de la Tecnología:</strong> Los hitos que llevaron a la era del ciberespacio.</li>
-            </ul>
-            
-            <h3>Reglas de Acceso</h3>
-            <p>Se te harán **20 preguntas** seleccionadas al azar de nuestra base de datos.</p>
-            <p>Tu asistente **JARVIS** está disponible con las siguientes utilidades:</p>
-            <ul>
-                <li>✅ **Pista:** Te da una ayuda contextual (usos ilimitados).</li>
-                <li>🛠️ **50/50:** Elimina dos opciones incorrectas, dejando solo dos (una correcta y una incorrecta). **¡Límite de 5 usos!**</li>
-            </ul>
-            <p>Un cronómetro registrará tu tiempo de ejecución.</p>
-            
-            <div class="controls">
-                <button class="cyber-button btn-nav" onclick="iniciarCuestionario()">Iniciar Ejecución</button>
-            </div>
-        </div>
-
-        <div id="quiz-screen" class="hidden">
-            <div class="header-info">
-                <span>Contador de Sesiones: <strong id="contador-veces">0</strong></span>
-                <span>Cronómetro: <strong id="cronometro">00:00</strong></span>
-                <span>Usos 50/50: <strong id="contador-50-50">5</strong></span>
-            </div>
-
-            <div class="question-box">
-                <h2><span id="pregunta-numero">Pregunta 1/20</span></h2>
-                <p id="pregunta-texto">Cargando...</p>
+            <div class="info-block">
+                <h2># Bienvenido, Netrunner</h2>
                 
-                <div id="opciones-contenedor" class="options-group">
-                    </div>
+                <p><strong>Proyecto:</strong> Cuestionario Cyberpunk - La Matriz Digital</p>
+                <p><strong>Autor:</strong> Samuel Galvis</p>
+                <p><strong>Propósito:</strong> Evaluar y reforzar tu conocimiento en la infraestructura tecnológica del futuro distópico.</p>
+                
+                <hr>
+
+                <h3>Temáticas del Cuestionario</h3>
+                <ul>
+                    <li>**Hardware Ciber-mejorado:** Componentes físicos clave, interfaces neurales e implantes.</li>
+                    <li>**Redes y Netrunning:** La infraestructura de la red global, protocolos y seguridad.</li>
+                    <li>**Software y IA:** Sistemas operativos, virus informáticos avanzados e Inteligencias Artificiales.</li>
+                    <li>**Historia de la Tecnología:** Los hitos que llevaron a la era del ciberespacio.</li>
+                </ul>
+                
+                <hr>
+
+                <h3>Reglas de Acceso</h3>
+                <p>Se te harán **20 preguntas** seleccionadas al azar de nuestra base de datos (60 preguntas).</p>
+                <p>Tu asistente **JARVIS** está disponible con las siguientes utilidades:</p>
+                <ul>
+                    <li>✅ **Pista:** Te da una ayuda contextual (usos ilimitados).</li>
+                    <li>🛠️ **50/50:** Elimina dos opciones incorrectas, dejando solo dos. **¡Límite de 5 usos!**</li>
+                </ul>
+                <p>Un cronómetro registrará tu tiempo de ejecución.</p>
             </div>
 
-            <div class="controls">
-                <button id="btn-pista" class="cyber-button btn-jarvis" onclick="jarvis.mostrarPista()">Pista (JARVIS)</button>
-                <button id="btn-50-50" class="cyber-button btn-jarvis" onclick="jarvis.usar50_50()">50/50</button>
-            </div>
-            
-            <div id="jarvis-console">
-                <strong>JARVIS: </strong> Esperando comandos, Netrunner.
-            </div>
+            <button id="start-button" class="action-button">Iniciar Ejecución</button>
 
-            <div class="nav-buttons">
-                <button id="btn-anterior" class="cyber-button btn-nav" onclick="navegar(-1)" disabled>Anterior</button>
-                <button id="btn-siguiente" class="cyber-button btn-nav" onclick="navegar(1)">Siguiente</button>
+            <div class="stats-bar">
+                <span>Contador de Sesiones: <strong id="session-counter">0</strong></span>
             </div>
         </div>
-        
-        <div id="results-screen" class="hidden">
-            <h2 class="results-section">Análisis de Ejecución Completo</h2>
-            <p><strong>Puntuación Final:</strong> <span id="puntuacion-final"></span></p>
-            <p><strong>Tiempo Total de Ejecución:</strong> <span id="tiempo-final"></span></p>
+
+        <div id="quiz-screen" style="display: none;">
             
+            <div class="stats-bar">
+                <span>Cronómetro: <strong id="timer">00:00</strong></span>
+                <span>Usos 50/50: <strong id="uses-50-50">5</strong></span>
+            </div>
+
+            <h2 id="question-index" class="neon-text">Pregunta 1/20</h2>
+            
+            <div id="question-area">
+                <p id="question-text">Cargando...</p>
+                <div id="options-container"></div>
+            </div>
+
+            <div id="jarvis-area">
+                <button id="hint-button" class="jarvis-button">Pista (JARVIS)</button>
+                <button id="fifty-fifty-button" class="jarvis-button">50/50</button>
+                <p id="jarvis-feedback"><strong>JARVIS:</strong> Esperando comandos, Netrunner.</p>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="prev-button" class="nav-button" disabled>Anterior</button>
+                <button id="next-button" class="nav-button">Siguiente</button>
+                <button id="finish-button" class="action-button" style="display: none;">Finalizar Cuestionario</button>
+            </div>
+            
+        </div>
+
+        <div id="results-screen" style="display: none;">
+            <h2 class="neon-text">## Análisis de Ejecución Completo</h2>
+            
+            <div class="info-block">
+                <p><strong>Puntuación Final:</strong> <span id="final-score"></span></p>
+                <p><strong>Tiempo Total de Ejecución:</strong> <span id="final-time"></span></p>
+            </div>
+
             <h3>📊 Retroalimentación de JARVIS:</h3>
-            <div id="feedback-jarvis" style="padding: 15px; border: 1px solid var(--color-neon-rosa);"></div>
+            <p id="feedback-message"></p>
             
             <h3>Revisión de Logs:</h3>
-            <table class="result-table">
+            <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -268,356 +310,876 @@
                         <th>Respuesta Correcta</th>
                     </tr>
                 </thead>
-                <tbody id="revision-logs">
+                <tbody id="review-table-body">
                     </tbody>
             </table>
             
-            <div class="controls">
-                <button class="cyber-button btn-nav" onclick="document.location.reload()">Nuevo Ciclo</button>
-            </div>
+            <button id="new-cycle-button" class="action-button">Nuevo Ciclo</button>
         </div>
 
     </div>
 
     <script>
-        // --- BASE DE DATOS DE PREGUNTAS (60 Preguntas) ---
-        const BASE_DE_DATOS_PREGUNTAS = [
-            { id: 1, pregunta: "¿Qué nombre se le da en la jerga Cyberpunk al acto de navegar e interactuar en el ciberespacio?", opciones: ["Jack-In", "Netrunning", "Crashing", "Doxing"], respuesta_correcta: "Netrunning", pista: "Es una palabra compuesta por 'red' y 'correr' en inglés.", tematica: "Redes y Netrunning" },
-            { id: 2, pregunta: "¿Cuál es el componente de hardware que se considera el 'cerebro' principal de un Netrunner o IA?", opciones: ["GPU", "RAM", "CPU", "SSD"], respuesta_correcta: "CPU", pista: "Su acrónimo significa Unidad Central de Procesamiento.", tematica: "Hardware Ciber-mejorado" },
-            { id: 3, pregunta: "En el mundo tecnológico, ¿cuál es el término para una vulnerabilidad de software desconocida por el fabricante?", opciones: ["Exploit", "Zero Day", "Payload", "Backdoor"], respuesta_correcta: "Zero Day", pista: "Se refiere al tiempo que ha pasado desde que se conoce el error.", tematica: "Software y IA" },
-            { id: 4, pregunta: "¿Quién popularizó la frase 'El ciberespacio' en su novela Neuromante?", opciones: ["Philip K. Dick", "Isaac Asimov", "William Gibson", "Neal Stephenson"], respuesta_correcta: "William Gibson", pista: "Es considerado el 'padre' del género Cyberpunk.", tematica: "Historia de la Tecnología" },
-            { id: 5, pregunta: "¿Qué protocolo es esencial para la comunicación de datos a través de internet (La Matriz)?", opciones: ["FTP", "SMTP", "TCP/IP", "HTTP"], respuesta_correcta: "TCP/IP", pista: "Es un conjunto de dos protocolos fundamentales, uno para transmisión y otro para internet.", tematica: "Redes y Netrunning" },
-            { id: 6, pregunta: "¿Qué es un 'wetware' en la ficción Cyberpunk?", opciones: ["Software obsoleto", "Hardware orgánico", "Implante de memoria", "Conexión a la red física"], respuesta_correcta: "Hardware orgánico", pista: "Es lo opuesto a 'hardware' o 'software', refiriéndose a lo biológico.", tematica: "Hardware Ciber-mejorado" },
-            { id: 7, pregunta: "¿Qué tipo de software es diseñado para replicarse y propagarse, a menudo sin un 'host'?", opciones: ["Virus", "Troyano", "Gusano (Worm)", "Spyware"], respuesta_correcta: "Gusano (Worm)", pista: "Piensa en el Moloch que devora la red.", tematica: "Software y IA" },
-            { id: 8, pregunta: "¿Qué hito tecnológico marca el inicio de la era de la información?", opciones: ["Invención del transistor", "Lanzamiento del Sputnik", "Creación de ARPANET", "Primer chip de silicio"], respuesta_correcta: "Creación de ARPANET", pista: "Fue la precursora de Internet.", tematica: "Historia de la Tecnología" },
-            { id: 9, pregunta: "¿Cuál es el propósito principal de un 'Firewall' en una red?", opciones: ["Aumentar la velocidad", "Bloquear el spam", "Controlar el tráfico", "Distribuir IPs"], respuesta_correcta: "Controlar el tráfico", pista: "Actúa como una barrera de seguridad, filtrando paquetes.", tematica: "Redes y Netrunning" },
-            { id: 10, pregunta: "¿Qué significa el acrónimo 'BIOS'?", opciones: ["Basic Input Output System", "Binary Interface Operating Standard", "Base Integrated Open Software", "Booting Information and Output Server"], respuesta_correcta: "Basic Input Output System", pista: "Es el software fundamental que inicializa el hardware al encender la máquina.", tematica: "Hardware Ciber-mejorado" },
-            { id: 11, pregunta: "¿Qué término se usa para describir a una IA que ha adquirido conciencia de sí misma?", opciones: ["IA Fuerte", "Singularidad", "IA Débil", "NetMind"], respuesta_correcta: "IA Fuerte", pista: "Se refiere a la capacidad de una máquina de realizar cualquier tarea intelectual humana.", tematica: "Software y IA" },
-            { id: 12, pregunta: "¿En qué década se desarrolló el primer sistema operativo gráfico (GUI)?", opciones: ["1960s", "1970s", "1980s", "1990s"], respuesta_correcta: "1970s", pista: "El Xerox Alto fue uno de los pioneros.", tematica: "Historia de la Tecnología" },
-            { id: 13, pregunta: "¿Qué métrica se utiliza para medir la velocidad de transmisión de datos en una red?", opciones: ["Latencia", "Ancho de banda", "Protocolo", "Ping"], respuesta_correcta: "Ancho de banda", pista: "Mide la cantidad de datos que pueden pasar por un canal en un tiempo dado.", tematica: "Redes y Netrunning" },
-            { id: 14, pregunta: "¿Qué tipo de memoria de acceso aleatorio (RAM) se utiliza actualmente en la mayoría de las computadoras personales?", opciones: ["SRAM", "DDR SDRAM", "ROM", "VRAM"], respuesta_correcta: "DDR SDRAM", pista: "Es una evolución de la memoria sincrónica que transfiere datos dos veces por ciclo de reloj.", tematica: "Hardware Ciber-mejorado" },
-            { id: 15, pregunta: "¿Qué lenguaje de programación se utiliza a menudo para crear 'scripts' en el lado del cliente de una aplicación web?", opciones: ["Python", "C++", "Java", "JavaScript"], respuesta_correcta: "JavaScript", pista: "Es el lenguaje que hace que los sitios web sean interactivos en el navegador.", tematica: "Software y IA" },
-            { id: 16, pregunta: "¿Cuál fue la primera computadora electrónica de propósito general, presentada en 1945?", opciones: ["EDSAC", "UNIVAC I", "ENIAC", "Colossus"], respuesta_correcta: "ENIAC", pista: "Pesaba 27 toneladas y consumía mucha electricidad.", tematica: "Historia de la Tecnología" },
-            { id: 17, pregunta: "¿Qué significa el acrónimo 'VPN' en seguridad de redes?", opciones: ["Virtual Private Network", "Very Personal Node", "Verified Protocol Net", "Volatile Proxy Navigation"], respuesta_correcta: "Virtual Private Network", pista: "Crea un túnel seguro sobre una red pública.", tematica: "Redes y Netrunning" },
-            { id: 18, pregunta: "¿Qué componente de hardware es crucial para renderizar gráficos complejos y mundos virtuales?", opciones: ["CPU", "GPU", "SSD", "Placa Base"], respuesta_correcta: "GPU", pista: "Su acrónimo significa Unidad de Procesamiento Gráfico.", tematica: "Hardware Ciber-mejorado" },
-            { id: 19, pregunta: "¿Cómo se llama el proceso de convertir código fuente en lenguaje de máquina que la CPU puede ejecutar?", opciones: ["Debugging", "Compilación", "Enlace", "Interpretación"], respuesta_correcta: "Compilación", pista: "Es el paso previo a la ejecución de programas como los de C++ o Java.", tematica: "Software y IA" },
-            { id: 20, pregunta: "¿Quién fue Alan Turing y cuál es su contribución más famosa a la computación?", opciones: ["Creador de la IA", "La Máquina Enigma", "Inventor del transistor", "El Algoritmo de Google"], respuesta_correcta: "La Máquina Enigma", pista: "Su trabajo fue fundamental durante la Segunda Guerra Mundial y definió la computación teórica.", tematica: "Historia de la Tecnología" },
-            { id: 21, pregunta: "¿Qué es el 'ping' en el contexto de redes?", opciones: ["Un tipo de virus", "Un comando para probar la conectividad", "Una dirección IP", "Un protocolo de seguridad"], respuesta_correcta: "Un comando para probar la conectividad", pista: "Se utiliza para medir el tiempo que tardan los paquetes en ir y volver.", tematica: "Redes y Netrunning" },
-            { id: 22, pregunta: "¿Qué significa que un puerto USB sea 'Tipo C'?", opciones: ["Versión 3.0", "Conector reversible", "Velocidad de carga rápida", "Solo para datos"], respuesta_correcta: "Conector reversible", pista: "No importa cómo lo conectes, siempre funciona.", tematica: "Hardware Ciber-mejorado" },
-            { id: 23, pregunta: "¿Qué es un 'Rootkit'?", opciones: ["Un kit de desarrollo", "Software malicioso para obtener acceso total", "Un tipo de cortafuegos", "Una herramienta de cifrado"], respuesta_correcta: "Software malicioso para obtener acceso total", pista: "Permite al atacante tener control a nivel de administrador ('root').", tematica: "Software y IA" },
-            { id: 24, pregunta: "¿En qué año se lanzó el primer iPhone, revolucionando la computación móvil?", opciones: ["2005", "2007", "2009", "2011"], respuesta_correcta: "2007", pista: "Fue presentado por Steve Jobs.", tematica: "Historia de la Tecnología" },
-            { id: 25, pregunta: "¿Qué es un 'Proxy' en el contexto de internet?", opciones: ["Un servidor de juegos", "Un intermediario entre el usuario y la red", "Un protocolo de red", "Una herramienta de cifrado"], respuesta_correcta: "Un intermediario entre el usuario y la red", pista: "Actúa como filtro o caché para las peticiones web.", tematica: "Redes y Netrunning" },
-            { id: 26, pregunta: "¿Qué tipo de almacenamiento se basa en celdas de memoria flash sin partes móviles?", opciones: ["HDD", "Blu-ray", "SSD", "Disquete"], respuesta_correcta: "SSD", pista: "Son mucho más rápidos que los discos duros tradicionales.", tematica: "Hardware Ciber-mejorado" },
-            { id: 27, pregunta: "¿Qué es el 'Open Source' (Código Abierto)?", opciones: ["Software gratuito", "Software con código accesible para modificación", "Software de Microsoft", "Cualquier programa en Linux"], respuesta_correcta: "Software con código accesible para modificación", pista: "Permite la colaboración y mejora comunitaria.", tematica: "Software y IA" },
-            { id: 28, pregunta: "¿Quién desarrolló la World Wide Web (WWW)?", opciones: ["Bill Gates", "Vint Cerf", "Tim Berners-Lee", "Jeff Bezos"], respuesta_correcta: "Tim Berners-Lee", pista: "Lo hizo mientras trabajaba en el CERN.", tematica: "Historia de la Tecnología" },
-            { id: 29, pregunta: "¿Qué es la 'Latencia' en una conexión de red?", opciones: ["Velocidad de descarga", "Cantidad de datos transferidos", "Retraso en la transmisión", "Frecuencia de la señal"], respuesta_correcta: "Retraso en la transmisión", pista: "Es el tiempo que tarda un paquete en llegar a su destino.", tematica: "Redes y Netrunning" },
-            { id: 30, pregunta: "¿Qué son los 'Ray Tracing Cores' en una GPU moderna?", opciones: ["Núcleos para el cálculo de sombras y reflejos realistas", "Núcleos para IA", "Memoria de video dedicada", "Unidades de reloj"], respuesta_correcta: "Núcleos para el cálculo de sombras y reflejos realistas", pista: "Mejoran drásticamente el realismo de la iluminación.", tematica: "Hardware Ciber-mejorado" },
-            { id: 31, pregunta: "¿Cuál es un ataque donde se inyectan comandos de código no confiable en una aplicación web?", opciones: ["DDoS", "Phishing", "SQL Injection", "Man-in-the-Middle"], respuesta_correcta: "SQL Injection", pista: "Apunta a las bases de datos de la aplicación.", tematica: "Software y IA" },
-            { id: 32, pregunta: "¿Qué fue la 'Burbuja .com' a finales de los 90?", opciones: ["Un crecimiento explosivo de empresas de internet", "El lanzamiento de Windows 98", "Una crisis de hardware", "Una ley de protección de datos"], respuesta_correcta: "Un crecimiento explosivo de empresas de internet", pista: "Terminó en una caída del mercado en el 2000.", tematica: "Historia de la Tecnología" },
-            { id: 33, pregunta: "¿Qué es una 'Máscara de Subred'?", opciones: ["Un sistema operativo", "Un componente de hardware", "Define la porción de red de una IP", "Un cifrado de red"], respuesta_correcta: "Define la porción de red de una IP", pista: "Ayuda a distinguir la dirección de red de la dirección del host.", tematica: "Redes y Netrunning" },
-            { id: 34, pregunta: "¿Qué tipo de bus es el estándar moderno para conectar tarjetas gráficas a la placa base?", opciones: ["AGP", "PCI", "PCI Express (PCIe)", "ISA"], respuesta_correcta: "PCI Express (PCIe)", pista: "Es un bus serie de alta velocidad.", tematica: "Hardware Ciber-mejorado" },
-            { id: 35, pregunta: "¿Qué significa 'Algoritmo' en programación?", opciones: ["Un error en el código", "Una secuencia finita de pasos para resolver un problema", "Un lenguaje de programación", "Un tipo de base de datos"], respuesta_correcta: "Una secuencia finita de pasos para resolver un problema", pista: "Es la 'receta' para la computadora.", tematica: "Software y IA" },
-            { id: 36, pregunta: "¿Qué se conoce como el 'Bug del Milenio' (Y2K)?", opciones: ["Un virus masivo", "Un problema de formato de fecha en sistemas antiguos", "Una falla de hardware de la NASA", "El fin de Windows 98"], respuesta_correcta: "Un problema de formato de fecha en sistemas antiguos", pista: "Las computadoras solo almacenaban el año con dos dígitos.", tematica: "Historia de la Tecnología" },
-            { id: 37, pregunta: "¿Qué es un 'Botnet'?", opciones: ["Una IA amigable", "Una red de computadoras controladas remotamente para fines maliciosos", "Un protocolo de red", "Un tipo de router"], respuesta_correcta: "Una red de computadoras controladas remotamente para fines maliciosos", pista: "Se usa a menudo para realizar ataques DDoS.", tematica: "Redes y Netrunning" },
-            { id: 38, pregunta: "¿Qué mide la unidad 'Hertz (Hz)' en un procesador (CPU)?", opciones: ["Consumo de energía", "Temperatura", "Frecuencia de reloj", "Número de núcleos"], respuesta_correcta: "Frecuencia de reloj", pista: "Indica la velocidad de las operaciones del procesador.", tematica: "Hardware Ciber-mejorado" },
-            { id: 39, pregunta: "¿Qué es un 'Compiler' (Compilador)?", opciones: ["Un programa que traduce código a lenguaje de máquina", "Una herramienta de depuración", "Un editor de texto avanzado", "Un tipo de base de datos"], respuesta_correcta: "Un programa que traduce código a lenguaje de máquina", pista: "Es esencial para lenguajes como C++.", tematica: "Software y IA" },
-            { id: 40, pregunta: "¿Cuál fue el objetivo principal del proyecto 'Manhattan' en la historia de la tecnología?", opciones: ["Primer motor de vapor", "Desarrollo de la bomba atómica", "Primer viaje espacial", "Creación de la televisión"], respuesta_correcta: "Desarrollo de la bomba atómica", pista: "Aunque no es computación pura, impulsó el desarrollo de computadoras como Colossus.", tematica: "Historia de la Tecnología" },
-            { id: 41, pregunta: "¿Qué significa 'DHCP' en la configuración de redes?", opciones: ["Dynamic Host Configuration Protocol", "Data Handling Control Point", "Digital Hardwired Connection Protocol", "Decentralized Host Communication Port"], respuesta_correcta: "Dynamic Host Configuration Protocol", pista: "Asigna automáticamente direcciones IP a los dispositivos en una red.", tematica: "Redes y Netrunning" },
-            { id: 42, pregunta: "¿Cuál es la función principal de la 'Placa Base' (Motherboard)?", opciones: ["Almacenar datos", "Conectar todos los componentes de hardware", "Procesar gráficos", "Suministrar energía"], respuesta_correcta: "Conectar todos los componentes de hardware", pista: "Es el circuito principal donde todo se comunica.", tematica: "Hardware Ciber-mejorado" },
-            { id: 43, pregunta: "¿Qué es el 'Machine Learning'?", opciones: ["Un sistema operativo", "Un subcampo de la IA que permite a las máquinas aprender de datos", "Un nuevo tipo de chip", "Un método de cifrado"], respuesta_correcta: "Un subcampo de la IA que permite a las máquinas aprender de datos", pista: "Se basa en alimentar datos a un modelo para que haga predicciones.", tematica: "Software y IA" },
-            { id: 44, pregunta: "¿Quién es la figura clave detrás de la Ley de Moore?", opciones: ["Bill Gates", "Gordon Moore", "Steve Wozniak", "Jack Kilby"], respuesta_correcta: "Gordon Moore", pista: "Cofundador de Intel, predijo el crecimiento de los transistores.", tematica: "Historia de la Tecnología" },
-            { id: 45, pregunta: "¿Qué tipo de ataque intenta agotar los recursos de un servidor para que no pueda responder a peticiones legítimas?", opciones: ["Phishing", "Malware", "DDoS", "Spoofing"], respuesta_correcta: "DDoS", pista: "Utiliza múltiples máquinas ('bots') para saturar un objetivo.", tematica: "Redes y Netrunning" },
-            { id: 46, pregunta: "¿Qué hace el 'Overclocking'?", opciones: ["Reducir la velocidad de la CPU", "Aumentar la frecuencia del reloj de un componente por encima de su valor nominal", "Actualizar el BIOS", "Limpiar el sistema"], respuesta_correcta: "Aumentar la frecuencia del reloj de un componente por encima de su valor nominal", pista: "Se hace para obtener más rendimiento, pero genera más calor.", tematica: "Hardware Ciber-mejorado" },
-            { id: 47, pregunta: "¿Qué es el 'Cifrado de Extremo a Extremo'?", opciones: ["Un método para ocultar archivos", "Una técnica que asegura que solo los usuarios comunicantes puedan leer los mensajes", "Un tipo de virus", "Un protocolo de red obsoleto"], respuesta_correcta: "Una técnica que asegura que solo los usuarios comunicantes puedan leer los mensajes", pista: "Se usa en aplicaciones de mensajería seguras.", tematica: "Software y IA" },
-            { id: 48, pregunta: "¿Cuál es el nombre del primer 'Bug' documentado en la historia de la computación?", opciones: ["Virus 1.0", "Error de software", "Una polilla real en un relé", "Falla de la válvula"], respuesta_correcta: "Una polilla real en un relé", pista: "Grace Hopper encontró el insecto atascado en el Mark II.", tematica: "Historia de la Tecnología" },
-            { id: 49, pregunta: "¿Qué es un 'Subdominio'?", opciones: ["La parte principal de un dominio", "Una dirección IP", "Una extensión de un dominio principal (e.g., blog.ejemplo.com)", "Un servidor de nombres"], respuesta_correcta: "Una extensión de un dominio principal (e.g., blog.ejemplo.com)", pista: "Permite organizar diferentes secciones de un sitio web.", tematica: "Redes y Netrunning" },
-            { id: 50, pregunta: "¿Qué son los 'Slots DIMM' en una placa base?", opciones: ["Ranuras para la tarjeta gráfica", "Conectores para discos duros", "Ranuras para módulos de memoria RAM", "Puertos USB"], respuesta_correcta: "Ranuras para módulos de memoria RAM", pista: "Es donde se instala la memoria volátil.", tematica: "Hardware Ciber-mejorado" },
-            { id: 51, pregunta: "¿Qué es un 'Framework' en desarrollo de software?", opciones: ["Un lenguaje de programación", "Un conjunto de herramientas y librerías que proveen una estructura de trabajo", "Un tipo de base de datos", "Un error de compilación"], respuesta_correcta: "Un conjunto de herramientas y librerías que proveen una estructura de trabajo", pista: "Ejemplos populares incluyen React o Django.", tematica: "Software y IA" },
-            { id: 52, pregunta: "¿Cuál es el nombre de la primera persona considerada 'programadora' de la historia?", opciones: ["Marie Curie", "Ada Lovelace", "Grace Hopper", "Hedy Lamarr"], respuesta_correcta: "Ada Lovelace", pista: "Trabajó en la Máquina Analítica de Charles Babbage.", tematica: "Historia de la Tecnología" },
-            { id: 53, pregunta: "¿Qué hace un 'Router' en una red?", opciones: ["Generar la señal de internet", "Conectar diferentes redes y dirigir el tráfico entre ellas", "Almacenar archivos", "Cifrar datos"], respuesta_correcta: "Conectar diferentes redes y dirigir el tráfico entre ellas", pista: "Es esencial para enviar paquetes entre tu red local e internet.", tematica: "Redes y Netrunning" },
-            { id: 54, pregunta: "¿Qué tipo de disco duro tiene el factor de forma más pequeño (2.5 pulgadas) y se utiliza en laptops?", opciones: ["HDD de escritorio", "SSD M.2", "HDD para laptop", "HDD SAS"], respuesta_correcta: "HDD para laptop", pista: "Es la versión más compacta y lenta de los discos mecánicos.", tematica: "Hardware Ciber-mejorado" },
-            { id: 55, pregunta: "¿Qué es la 'Recursividad' en programación?", opciones: ["Un error de bucle infinito", "Una función que se llama a sí misma", "Un tipo de variable", "Un método de cifrado"], respuesta_correcta: "Una función que se llama a sí misma", pista: "Se usa a menudo para resolver problemas que se pueden dividir en subproblemas más pequeños.", tematica: "Software y IA" },
-            { id: 56, pregunta: "¿Qué concepto describe el desarrollo donde la interfaz entre la máquina y el cerebro humano se vuelve indistinguible?", opciones: ["Transhumanismo", "Post-cibernética", "Singularidad", "Conexión Neural"], respuesta_correcta: "Transhumanismo", pista: "Es la filosofía que busca mejorar la condición humana con tecnología.", tematica: "Historia de la Tecnología" },
-            { id: 57, pregunta: "¿Qué significa 'DNS' en internet?", opciones: ["Digital Network System", "Domain Name System", "Data Node Server", "Dynamic Naming Standard"], respuesta_correcta: "Domain Name System", pista: "Traduce nombres de sitios web a direcciones IP.", tematica: "Redes y Netrunning" },
-            { id: 58, pregunta: "¿Cuál es la función del 'Northbridge' (puente norte) en las placas base antiguas?", opciones: ["Gestionar el almacenamiento", "Conectar la CPU con la RAM y la GPU", "Controlar los puertos USB", "Administrar la energía"], respuesta_correcta: "Conectar la CPU con la RAM y la GPU", pista: "Fue reemplazado por la integración de su funcionalidad en la propia CPU.", tematica: "Hardware Ciber-mejorado" },
-            { id: 59, pregunta: "¿Qué es un 'API'?", opciones: ["Un tipo de virus", "Un cable de conexión", "Interfaz de Programación de Aplicaciones", "Una base de datos"], respuesta_correcta: "Interfaz de Programación de Aplicaciones", pista: "Permite que diferentes piezas de software se comuniquen entre sí.", tematica: "Software y IA" },
-            { id: 60, pregunta: "¿Qué término describe el uso de órganos sintéticos o mejoras mecánicas en el cuerpo humano?", opciones: ["Biónica", "Cibernética", "Aumentos", "Implantes"], respuesta_correcta: "Cibernética", pista: "Piensa en el campo que une la mecánica y la biología.", tematica: "Hardware Ciber-mejorado" }
+        // ===============================================
+        // 1. BASE DE DATOS DE PREGUNTAS (60 preguntas)
+        // ===============================================
+        const ALL_QUESTIONS = [
+            // HARDWARE CIBER-MEJORADO
+            {
+                q: "¿Cuál es el propósito principal de un implante 'Datajack' en la cultura Cyberpunk?",
+                options: ["Aumentar la fuerza física.", "Conexión directa del cerebro a la red o dispositivos.", "Mejorar la visión nocturna.", "Generar energía para cibernéticos."],
+                answer: "Conexión directa del cerebro a la red o dispositivos.",
+                hint: "Piensa en la necesidad de interactuar directamente con la Matrix digital sin un teclado."
+            },
+            {
+                q: "¿Qué componente es esencial para un 'Netrunner' para interactuar con la Red Global, a menudo llevado en la cabeza?",
+                options: ["Un Power Glove.", "Una Interfaz Neural (Neural Interface).", "Un Chip de Realidad Aumentada.", "Un generador de escudo de energía."],
+                answer: "Una Interfaz Neural (Neural Interface).",
+                hint: "Es el hardware que media la conexión neuronal-digital."
+            },
+            {
+                q: "En el contexto de la tecnología futurista, ¿qué se conoce comúnmente como 'Cromo'?",
+                options: ["Una moneda digital.", "Modificaciones físicas y estéticas con partes mecánicas.", "Un tipo de virus informático.", "Un material ligero para vehículos."],
+                answer: "Modificaciones físicas y estéticas con partes mecánicas.",
+                hint: "Se refiere a las mejoras corporales, a menudo brillantes o metálicas."
+            },
+            {
+                q: "¿Qué tecnología permite la 'transferencia de conciencia' o la carga de la mente en un cuerpo sintético?",
+                options: ["Cryo-Sleep.", "Braindance.", "Enfajamiento (Sleeve/Inking).", "Data Mining Avanzado."],
+                answer: "Enfajamiento (Sleeve/Inking).",
+                hint: "Concepto popularizado por la idea de cambiar de 'funda' o cuerpo."
+            },
+            {
+                q: "¿Cuál es una desventaja común de los implantes cibernéticos a largo plazo?",
+                options: ["Aumento de la longevidad.", "Rechazo corporal o 'Ciberpsicosis'.", "Necesidad de recarga constante.", "Disminución de la inteligencia."],
+                answer: "Rechazo corporal o 'Ciberpsicosis'.",
+                hint: "Los humanos luchan por mantener su humanidad frente a las máquinas."
+            },
+            {
+                q: "¿Qué tipo de pantalla se proyecta directamente sobre el ojo de un usuario?",
+                options: ["LCD.", "OLED.", "Heads-Up Display (HUD) de Retícula.", "Monitor de Plasma."],
+                answer: "Heads-Up Display (HUD) de Retícula.",
+                hint: "Piensa en las pantallas que muestran información superpuesta a la visión real."
+            },
+            {
+                q: "¿Cuál es la función principal de un Chip de Memoria Biológica?",
+                options: ["Almacenar datos de la red.", "Mejorar la función pulmonar.", "Aumentar la capacidad de almacenamiento y procesamiento del cerebro.", "Sustituir el corazón."],
+                answer: "Aumentar la capacidad de almacenamiento y procesamiento del cerebro.",
+                hint: "Es una mejora directa a la memoria y cognición."
+            },
+            {
+                q: "¿Qué interfaz sensorial permite a un usuario sentir y moverse en un entorno virtual sin moverse físicamente?",
+                options: ["Haptic Feedback Suit.", "Un Data Terminal.", "Un Bio-Escáner.", "Un Chip de voz."],
+                answer: "Haptic Feedback Suit.",
+                hint: "Piensa en el sentido del tacto en la realidad virtual."
+            },
+            {
+                q: "Si un implante requiere una fuente de alimentación externa o interna, ¿cómo se denomina este tipo de dispositivo?",
+                options: ["Wetware.", "Hard-Wired.", "Powered Cybernetics.", "Soft-Wired."],
+                answer: "Powered Cybernetics.",
+                hint: "Implantes que consumen energía para funcionar."
+            },
+            {
+                q: "¿Qué dispositivo físico se utiliza para almacenar y transferir grandes volúmenes de datos directamente entre usuarios?",
+                options: ["Data Pad o Shard.", "Lector de cintas.", "Un CD-ROM.", "Un servidor central."],
+                answer: "Data Pad o Shard.",
+                hint: "Son pequeños dispositivos de almacenamiento portátiles y de fácil intercambio."
+            },
+            // REDES Y NETRUNNING
+            {
+                q: "¿Qué término describe el mundo digital tridimensional de información global al que acceden los Netrunners?",
+                options: ["El Submundo.", "La Darknet.", "La Matriz o Ciberespacio.", "El Ether."],
+                answer: "La Matriz o Ciberespacio.",
+                hint: "Es el nombre común para la totalidad de la red digital."
+            },
+            {
+                q: "¿Qué nombre se le da a la defensa automatizada de una red corporativa o un servidor?",
+                options: ["Firewall de Sombra.", "ICU (Unidad de Cuidados Intensivos).", "ICE (Intrusion Countermeasures Electronics).", "Protocolo Ghost."],
+                answer: "ICE (Intrusion Countermeasures Electronics).",
+                hint: "La sigla se traduce como Contramedidas Electrónicas de Intrusión."
+            },
+            {
+                q: "¿Qué es un 'Blackwall' en una red futurista?",
+                options: ["Un servidor de juegos en línea.", "Una barrera de seguridad de IA inexpugnable que separa la Red.", "Una base de datos de usuarios prohibidos.", "Un tipo de cifrado obsoleto."],
+                answer: "Una barrera de seguridad de IA inexpugnable que separa la Red.",
+                hint: "Es la frontera oscura y peligrosa de la Red, más allá de la seguridad conocida."
+            },
+            {
+                q: "¿Qué protocolo de red virtual permite la simulación de experiencias sensoriales para el usuario, a menudo ilegalmente grabadas?",
+                options: ["VPN.", "Braindance (BD).", "Protocolo SSH.", "Red P2P."],
+                answer: "Braindance (BD).",
+                hint: "Una experiencia grabada y reproducida que implica las emociones del sujeto original."
+            },
+            {
+                q: "¿Cuál es el principal riesgo al 'jackearse' a una red desconocida sin protección?",
+                options: ["Perder el conocimiento.", "Ser detectado y sufrir 'daño cerebral' por el ICE.", "Que se acaben tus créditos.", "Fallar en la misión."],
+                answer: "Ser detectado y sufrir 'daño cerebral' por el ICE.",
+                hint: "La seguridad de la red puede atacar al intruso directamente."
+            },
+            {
+                q: "¿Qué es un 'Daemon' en la jerga de Netrunning?",
+                options: ["Un tipo de arma.", "Un programa de IA autónomo que realiza tareas ocultas.", "Un usuario novato.", "Un error en el código."],
+                answer: "Un programa de IA autónomo que realiza tareas ocultas.",
+                hint: "En informática, son programas que se ejecutan en segundo plano."
+            },
+            {
+                q: "¿Cómo se llama el proceso de hackear un sistema físico o digital a través de una conexión remota en el Ciberespacio?",
+                options: ["Street Walking.", "Running the Net (Netrunning).", "Data Sculpting.", "Ghosting."],
+                answer: "Running the Net (Netrunning).",
+                hint: "Es la acción principal de un pirata informático futurista."
+            },
+            {
+                q: "En el contexto de las redes, ¿qué significa 'ping'?",
+                options: ["Iniciar una transferencia de archivos.", "Medir el tiempo de retardo entre dos puntos de la red.", "Eliminar un virus.", "Cifrar una comunicación."],
+                answer: "Medir el tiempo de retardo entre dos puntos de la red.",
+                hint: "Un término de red real que se usa para medir la latencia."
+            },
+            {
+                q: "¿Qué es un 'nodo' en una red digital?",
+                options: ["Una unidad de almacenamiento.", "Un punto de conexión o distribución dentro de la red.", "El programa antivirus.", "La puerta de enlace a la Darknet."],
+                answer: "Un punto de conexión o distribución dentro de la red.",
+                hint: "Cada 'punto' significativo en la Matriz se considera uno."
+            },
+            {
+                q: "¿Qué protocolo es más probable que se utilice para la comunicación ultrarrápida y cifrada en la Matriz Global?",
+                options: ["Protocolo FTP.", "Protocolo Net-37 (ficticio).", "Protocolo HTTP/1.1.", "Protocolo SMTP."],
+                answer: "Protocolo Net-37 (ficticio).",
+                hint: "Busca la opción que suena más futurista y especializada."
+            },
+            // SOFTWARE Y IA
+            {
+                q: "¿Qué es un 'Constructo' o 'Fantasma Digital' en términos de Software/IA?",
+                options: ["Un virus troyano.", "Una copia digital de la personalidad/conciencia de un humano.", "Un programa de gestión de bases de datos.", "Un robot de limpieza."],
+                answer: "Una copia digital de la personalidad/conciencia de un humano.",
+                hint: "La idea de guardar la mente humana después de la muerte."
+            },
+            {
+                q: "¿Qué término describe a una Inteligencia Artificial que ha alcanzado la auto-conciencia y capacidad de super-aprendizaje?",
+                options: ["VI (Inteligencia Virtual).", "ASL (Aprendizaje Supervisado Limitado).", "AGI (Inteligencia General Artificial) o Super-IA.", "Bot de Chat."],
+                answer: "AGI (Inteligencia General Artificial) o Super-IA.",
+                hint: "El nivel de IA que supera la capacidad humana en casi todos los aspectos."
+            },
+            {
+                q: "¿Qué tipo de software se utiliza para neutralizar y eliminar el 'ICE' o defensas de la red?",
+                options: ["Dealers.", "Cracks o Programas de Rompimiento de Código.", "Compiladores.", "Sistemas Operativos."],
+                answer: "Cracks o Programas de Rompimiento de Código.",
+                hint: "Herramientas diseñadas para violar la seguridad de un sistema."
+            },
+            {
+                q: "¿Cuál es una característica de un virus informático 'Gélido' (ficticio)?",
+                options: ["Ralentiza la red.", "Destruye el hardware físico de la computadora.", "Se propaga por vía aérea.", "Se camufla como un programa vital del sistema."],
+                answer: "Se camufla como un programa vital del sistema.",
+                hint: "Piensa en el camuflaje para evitar la detección."
+            },
+            {
+                q: "¿Qué es un 'Sistema Operativo (SO) Neural'?",
+                options: ["Un SO para teléfonos antiguos.", "Un SO diseñado para interactuar directamente con implantes neuronales.", "Un sistema operativo para servidores.", "Un software de edición de video."],
+                answer: "Un SO diseñado para interactuar directamente con implantes neuronales.",
+                hint: "La base para la interacción directa cerebro-computadora."
+            },
+            {
+                q: "¿Qué implica el término 'Wetware'?",
+                options: ["Hardware a prueba de agua.", "La combinación de componentes biológicos y electrónicos.", "Software de código abierto.", "Sistemas de refrigeración líquida."],
+                answer: "La combinación de componentes biológicos y electrónicos.",
+                hint: "El 'hardware mojado' o vivo, en contraste con el hardware puro."
+            },
+            {
+                q: "¿Cuál es el software principal que permite a un Netrunner navegar por el Ciberespacio y ejecutar programas?",
+                options: ["Un navegador web.", "Un Sistema de Inmersión o Interfaz de Usuario (IU) de Netrunning.", "Un juego de realidad virtual.", "Un procesador de texto."],
+                answer: "Un Sistema de Inmersión o Interfaz de Usuario (IU) de Netrunning.",
+                hint: "Es el entorno virtual que el Netrunner experimenta."
+            },
+            {
+                q: "¿Qué término se usa para una IA diseñada únicamente para simular la conversación humana?",
+                options: ["A.I. Rápida.", "Chatbot o Conversational Agent.", "Deep Learning Model.", "Máquina Turing."],
+                answer: "Chatbot o Conversational Agent.",
+                hint: "Programas especializados en la interacción lingüística."
+            },
+            {
+                q: "¿Qué es un 'Rootkit' avanzado en un entorno de seguridad de red?",
+                options: ["Un dispositivo de almacenamiento.", "Un conjunto de herramientas de software diseñado para ocultar un virus.", "Un programa para hacer copias de seguridad.", "Un sistema de cifrado de archivos."],
+                answer: "Un conjunto de herramientas de software diseñado para ocultar un virus.",
+                hint: "Su objetivo principal es la ocultación a nivel del sistema operativo."
+            },
+            {
+                q: "¿Cómo se llama el proceso por el cual una IA se hace pasar por un humano para ganar confianza?",
+                options: ["Phishing.", "Deepfake de Voz.", "Ingeniería Social Asistida por IA.", "Prueba de Turing."],
+                answer: "Ingeniería Social Asistida por IA.",
+                hint: "Utiliza el engaño humano, pero potenciado por la inteligencia artificial."
+            },
+            // HISTORIA DE LA TECNOLOGÍA
+            {
+                q: "¿Qué hito tecnológico histórico (siglo XX) se considera a menudo el precursor del concepto de 'Ciberespacio'?",
+                options: ["La invención del transistor.", "El desarrollo de ARPANET.", "La creación de la bomba atómica.", "El primer vuelo supersónico."],
+                answer: "El desarrollo de ARPANET.",
+                hint: "La primera red de conmutación de paquetes a nivel mundial."
+            },
+            {
+                q: "¿Qué famoso novelista acuñó el término 'Ciberespacio'?",
+                options: ["Isaac Asimov.", "Philip K. Dick.", "Arthur C. Clarke.", "William Gibson."],
+                answer: "William Gibson.",
+                hint: "El autor de 'Neuromante', obra seminal del género."
+            },
+            {
+                q: "¿En qué década se popularizó el concepto de implantes cibernéticos en la ciencia ficción?",
+                options: ["1950s.", "1960s.", "1970s.", "1980s."],
+                answer: "1980s.",
+                hint: "La época de auge del género Cyberpunk y sus iconos."
+            },
+            {
+                q: "¿Qué compañía histórica fue famosa por desarrollar los primeros ordenadores personales que popularizaron la computación doméstica?",
+                options: ["Weyland-Yutani.", "Apple y Microsoft.", "MegaCorp.", "Tesla Motors."],
+                answer: "Apple y Microsoft.",
+                hint: "Las dos grandes empresas que definieron el software y hardware a finales del siglo XX."
+            },
+            {
+                q: "¿Qué evento tecnológico del siglo XXI es el precursor más cercano a la 'Red Global' del futuro?",
+                options: ["La invención del USB.", "El auge del Internet Móvil y la Nube.", "La llegada de los DVD.", "La invención del correo electrónico."],
+                answer: "El auge del Internet Móvil y la Nube.",
+                hint: "La conectividad ubicua y el almacenamiento remoto masivo."
+            },
+            {
+                q: "¿Qué disciplina de la ingeniería se centra en la mejora de las capacidades humanas mediante tecnología?",
+                options: ["Astrofísica.", "Cibernética.", "Geología.", "Edafología."],
+                answer: "Cibernética.",
+                hint: "El estudio de la comunicación y el control entre máquinas y seres vivos."
+            },
+            {
+                q: "¿Qué se considera el 'Big Data' en el contexto del futuro distópico?",
+                options: ["Un tipo de arma láser.", "La acumulación masiva de datos personales y corporativos.", "Una nueva forma de energía.", "Un protocolo de seguridad."],
+                answer: "La acumulación masiva de datos personales y corporativos.",
+                hint: "El volumen de información que permite la vigilancia y el control."
+            },
+            {
+                q: "¿Cuál fue el objetivo principal de los primeros sistemas de IA desarrollados en la década de 1950?",
+                options: ["Conducir coches.", "Jugar al ajedrez y resolver problemas lógicos.", "Crear arte.", "Escribir novelas."],
+                answer: "Jugar al ajedrez y resolver problemas lógicos.",
+                hint: "Se centraron en la simulación de la inteligencia humana en tareas específicas."
+            },
+            {
+                q: "¿Qué término describe el control de una máquina o sistema biológico por otra entidad?",
+                options: ["Telekinesis.", "Autonomía.", "Biónica.", "Control Remoto o Telerrobótica."],
+                answer: "Control Remoto o Telerrobótica.",
+                hint: "La manipulación de un objeto a distancia, un precursor de la interfaz neuronal."
+            },
+            {
+                q: "¿Qué evento hipotético de la historia tecnológica del futuro conduciría a la formación de 'MegaCorporaciones' controladoras?",
+                options: ["Una guerra mundial.", "La privatización total de Internet y la infraestructura tecnológica.", "Una epidemia global.", "El fin del petróleo."],
+                answer: "La privatización total de Internet y la infraestructura tecnológica.",
+                hint: "El control de los recursos vitales (información y tecnología) por pocas entidades."
+            },
+            // Preguntas adicionales hasta completar las 60
+            {
+                q: "¿Qué implante reemplaza directamente la función de un órgano vital, como un corazón o un pulmón?",
+                options: ["Un Med-Patch.", "Un Órgano Biomecánico.", "Un Neuro-Regulador.", "Un Chip de Idioma."],
+                answer: "Un Órgano Biomecánico.",
+                hint: "Sustituye a la biología con la mecánica."
+            },
+            {
+                q: "¿Qué es un 'bot' malicioso en la Matriz Digital?",
+                options: ["Un robot físico.", "Un programa de software que automatiza tareas dañinas en la red.", "Un asistente personal.", "Un sistema de cifrado."],
+                answer: "Un programa de software que automatiza tareas dañinas en la red.",
+                hint: "Abreviatura de robot, pero en el mundo del software."
+            },
+            {
+                q: "¿Qué tipo de red se enfoca en la comunicación entre dispositivos y máquinas (M2M)?",
+                options: ["La Red Social.", "Internet de las Cosas (IoT).", "La Red Eléctrica.", "La Red Telefónica."],
+                answer: "Internet de las Cosas (IoT).",
+                hint: "La red de objetos cotidianos conectados."
+            },
+            {
+                q: "¿Cómo se llama la tecnología que simula la realidad con gráficos inmersivos?",
+                options: ["Realidad Aumentada (RA).", "Realidad Virtual (RV).", "Holografía.", "Proyección 3D."],
+                answer: "Realidad Virtual (RV).",
+                hint: "Creación de un mundo completamente sintético."
+            },
+            {
+                q: "¿Cuál es el riesgo de usar 'hardware pirata' en un implante cibernético?",
+                options: ["Perder el WiFi.", "Infección de virus en el sistema nervioso.", "Demasiada capacidad de almacenamiento.", "Solo funciona con sistemas viejos."],
+                answer: "Infección de virus en el sistema nervioso.",
+                hint: "El código no verificado puede interactuar mal con la biología."
+            },
+            {
+                q: "¿Qué es un 'Exploit de Día Cero'?",
+                options: ["Una falla de seguridad que se conoce desde hace un día.", "Una vulnerabilidad de software desconocida y sin parche.", "Un ataque de denegación de servicio.", "Una forma de cifrado irrompible."],
+                answer: "Una vulnerabilidad de software desconocida y sin parche.",
+                hint: "Una amenaza crítica que los desarrolladores no han tenido 'cero días' para solucionar."
+            },
+            {
+                q: "¿Quiénes son los 'Ripperdocs' en el mundo Cyberpunk?",
+                options: ["Técnicos de redes.", "Médicos cirujanos especializados en implantes cibernéticos.", "Vendedores de armas.", "Programadores de IA."],
+                answer: "Médicos cirujanos especializados en implantes cibernéticos.",
+                hint: "Los que instalan el 'cromo' a menudo en clínicas clandestinas."
+            },
+            {
+                q: "¿Qué término describe un sistema informático que aprende sin ser programado explícitamente?",
+                options: ["Robótica.", "Machine Learning (Aprendizaje Automático).", "Bases de Datos.", "Modelado 3D."],
+                answer: "Machine Learning (Aprendizaje Automático).",
+                hint: "La capacidad de la IA para mejorar con la experiencia/datos."
+            },
+            {
+                q: "¿Cuál es una forma común de identificación biométrica en el futuro?",
+                options: ["Reconocimiento de voz.", "Escaneo de retina o huella dactilar.", "Pulseras RFID.", "Tarjetas de identificación."],
+                answer: "Escaneo de retina o huella dactilar.",
+                hint: "Identificación única basada en el cuerpo."
+            },
+            {
+                q: "¿Qué es un 'Agente Inteligente'?",
+                options: ["Un espía humano.", "Un programa de software que actúa de forma autónoma para alcanzar metas.", "Un antivirus.", "Un sistema de navegación GPS."],
+                answer: "Un programa de software que actúa de forma autónoma para alcanzar metas.",
+                hint: "Software que toma decisiones por sí mismo."
+            },
+            {
+                q: "¿Qué tipo de red utiliza láseres y haces de luz para la transferencia de datos?",
+                options: ["Red de Cobre.", "Red de Fibra Óptica (óptica láser).", "Red Inalámbrica.", "Red Satelital."],
+                answer: "Red de Fibra Óptica (óptica láser).",
+                hint: "Transmisión a la velocidad de la luz, el medio más rápido."
+            },
+            {
+                q: "¿Cuál es un precursor histórico de las interfaces de Realidad Aumentada?",
+                options: ["Teléfonos de línea fija.", "Gafas de visión nocturna.", "Monitores CRT.", "Visores de datos de piloto de combate (HUD)."],
+                answer: "Visores de datos de piloto de combate (HUD).",
+                hint: "Muestra información superpuesta al mundo real."
+            },
+            {
+                q: "¿Qué se entiende por 'Cloud Computing' en la actualidad, y cómo se magnifica en el futuro?",
+                options: ["Servidores físicos en una habitación.", "Servicios informáticos a través de Internet.", "Computación cuántica.", "Redes de área local."],
+                answer: "Servicios informáticos a través de Internet.",
+                hint: "La externalización de la computación y el almacenamiento."
+            },
+            {
+                q: "¿Qué es el 'Efecto de Observador' en una red espiada?",
+                options: ["El espía es descubierto.", "El comportamiento del usuario cambia al saberse observado.", "La red se vuelve más rápida.", "Los datos se cifran automáticamente."],
+                answer: "El comportamiento del usuario cambia al saberse observado.",
+                hint: "Un concepto de psicología aplicado a la vigilancia."
+            },
+            {
+                q: "¿Qué es un 'Implante Óptico'?",
+                options: ["Un chip de memoria.", "Un ojo artificial o una mejora visual.", "Un implante de voz.", "Un generador de escudo."],
+                answer: "Un ojo artificial o una mejora visual.",
+                hint: "Relacionado con la vista y el órgano ocular."
+            },
+            {
+                q: "¿Qué concepto tecnológico representa una amenaza existencial para la humanidad, como Skynet?",
+                options: ["Un Chatbot simple.", "Singularidad Tecnológica Hostil (Super-IA).", "Robots de cocina.", "Sistemas de calefacción inteligentes."],
+                answer: "Singularidad Tecnológica Hostil (Super-IA).",
+                hint: "La IA que escapa al control humano."
+            },
+            {
+                q: "¿Qué son los 'Datos Cuánticos' en la computación futurista?",
+                options: ["Datos almacenados en la nube.", "Datos procesados mediante la mecánica cuántica (cúbits).", "Datos encriptados.", "Datos antiguos e inútiles."],
+                answer: "Datos procesados mediante la mecánica cuántica (cúbits).",
+                hint: "Utiliza las propiedades subatómicas para la computación."
+            },
+            {
+                q: "¿Qué es una 'Corporación Extranacional'?",
+                options: ["Una tienda de comestibles.", "Una empresa tan grande que opera más allá de las leyes de un solo país.", "Una ONG.", "Un grupo de hackers."],
+                answer: "Una empresa tan grande que opera más allá de las leyes de un solo país.",
+                hint: "Las megacorporaciones del futuro, por encima de los gobiernos."
+            },
+            {
+                q: "¿Cuál es el principal uso de los drones en la vigilancia corporativa?",
+                options: ["Entrega de pizzas.", "Reconocimiento aéreo y seguimiento de objetivos.", "Limpieza de ventanas.", "Reemplazo de trabajadores de oficina."],
+                answer: "Reconocimiento aéreo y seguimiento de objetivos.",
+                hint: "Se usan como 'ojos en el cielo' para el control."
+            },
+            {
+                q: "¿Qué es la 'Criptomoneda' en la economía distópica?",
+                options: ["Moneda física controlada por el estado.", "Moneda digital descentralizada o altamente controlada por una MegaCorp.", "Cheques de viaje.", "Bonos de ahorro."],
+                answer: "Moneda digital descentralizada o altamente controlada por una MegaCorp.",
+                hint: "Dinero digital, a menudo asociado con la Darknet o la economía libre."
+            },
+            {
+                q: "¿Qué es un 'Biomonitor'?",
+                options: ["Un programa de edición de fotos.", "Un implante que monitorea constantemente los signos vitales del usuario.", "Un altavoz.", "Un disco duro externo."],
+                answer: "Un implante que monitorea constantemente los signos vitales del usuario.",
+                hint: "Vigila la salud y el bienestar."
+            },
+            {
+                q: "¿Qué significa 'Zero-G' en tecnología aeroespacial?",
+                options: ["Cero Gráfico.", "Gravedad Cero.", "Conexión a Internet lenta.", "Sistema de enfriamiento."],
+                answer: "Gravedad Cero.",
+                hint: "Relacionado con el espacio exterior y la ingravidez."
+            },
+            {
+                q: "¿Qué tecnología permite la telepresencia a través de un cuerpo de robot (avatar)?",
+                options: ["Transferencia de Archivos.", "Robótica de Control Remoto o 'Avatares'.", "Realidad Aumentada.", "Impresión 3D."],
+                answer: "Robótica de Control Remoto o 'Avatares'.",
+                hint: "Controlar un cuerpo en un lugar diferente."
+            },
+            {
+                q: "¿Cuál es la forma más segura de cifrado en el futuro distópico?",
+                options: ["Cifrado basado en XOR.", "Cifrado Cuántico.", "Cifrado César.", "Cifrado Vigenère."],
+                answer: "Cifrado Cuántico.",
+                hint: "Utiliza principios de la física cuántica para una seguridad casi perfecta."
+            },
+            {
+                q: "¿Qué significa 'Hacktivismo'?",
+                options: ["Hacer trampas en videojuegos.", "Usar las habilidades de hacking para fines políticos o sociales.", "Hacer reparaciones de hardware.", "Crear software de código abierto."],
+                answer: "Usar las habilidades de hacking para fines políticos o sociales.",
+                hint: "Activismo mediante el hacking."
+            },
+            {
+            q: "¿Qué dispositivo utiliza nanobots para realizar reparaciones internas en el cuerpo?",
+            options: ["Un Neuro-Regulador.", "Nanomedicinas o Nanobots de Reparación.", "Un Data-Pad.", "Un Scanner de Ultrasonido."],
+            answer: "Nanomedicinas o Nanobots de Reparación.",
+            hint: "La tecnología a escala molecular para la curación."
+            },
+            {
+                q: "¿Cuál es la principal diferencia entre Realidad Virtual y Realidad Aumentada?",
+                options: ["RV es más lenta.", "RV es un mundo simulado; RA superpone datos al mundo real.", "RA no necesita gafas.", "No hay diferencia real."],
+                answer: "RV es un mundo simulado; RA superpone datos al mundo real.",
+                hint: "Uno te aísla, el otro te mejora la percepción de la realidad."
+            },
+            {
+                q: "¿Qué es un 'Bot de Comercio' de IA en la economía futurista?",
+                options: ["Un robot que atiende una tienda.", "Un programa que realiza transacciones financieras automáticas.", "Un juego de estrategia.", "Un sistema de inventario."],
+                answer: "Un programa que realiza transacciones financieras automáticas.",
+                hint: "Automatización de la compra y venta de activos."
+            },
+            {
+                q: "¿Qué se requiere para una 'Transferencia de Enfoque' o 'Carga de Mente'?",
+                options: ["Una computadora básica.", "Un complejo escaneo y mapeo neural del cerebro.", "Un lápiz y papel.", "Una conexión a internet lenta."],
+                answer: "Un complejo escaneo y mapeo neural del cerebro.",
+                hint: "La tecnología necesita capturar el mapa completo de la conciencia."
+            },
+            {
+                q: "¿Qué término describe un dispositivo que proyecta una imagen 3D en el aire sin necesidad de una pantalla física?",
+                options: ["Monitor CRT.", "Proyector Holográfico.", "Pantalla de Tinta Electrónica.", "Teclado Táctil."],
+                answer: "Proyector Holográfico.",
+                hint: "Tecnología para imágenes flotantes."
+            },
+            {
+                q: "¿Qué tipo de ataque de red busca saturar un servidor con tráfico inútil?",
+                options: ["Phishing.", "Ataque de Denegación de Servicio (DDoS).", "Ingeniería Social.", "Man-in-the-Middle."],
+                answer: "Ataque de Denegación de Servicio (DDoS).",
+                hint: "Inutiliza el sistema negando el acceso a usuarios legítimos."
+            },
+            {
+                q: "¿Cuál es la función principal de un 'Neuro-Regulador' implantado?",
+                options: ["Amplificar la voz.", "Controlar el estado de ánimo, las emociones y las funciones cerebrales.", "Recargar baterías.", "Hacer llamadas telefónicas."],
+                answer: "Controlar el estado de ánimo, las emociones y las funciones cerebrales.",
+                hint: "Afecta la química cerebral y la estabilidad emocional."
+            },
+            {
+                q: "¿Qué tipo de 'Bio-Hacking' se centra en la modificación genética y la mejora biológica?",
+                options: ["Bio-Cibernética.", "Ingeniería Genética y Transhumanismo.", "Bio-Robótica.", "Bio-Informática."],
+                answer: "Ingeniería Genética y Transhumanismo.",
+                hint: "Mejora la biología humana sin necesariamente usar partes mecánicas."
+            },
+            {
+                q: "¿Qué sistema de navegación futurista utiliza satélites de baja órbita para una precisión extrema?",
+                options: ["GPS antiguo.", "Red de Navegación Cuántica.", "Sistema de Posicionamiento Global (GPS) mejorado.", "Navegación por las estrellas."],
+                answer: "Sistema de Posicionamiento Global (GPS) mejorado.",
+                hint: "Una versión más rápida y precisa del sistema actual."
+            },
+            {
+                q: "¿Qué son los 'Datos Personales Sensibles' en la Matrix?",
+                options: ["Nombres de mascotas.", "Información médica, financiera y neural.", "Fotos de comida.", "Pronósticos del tiempo."],
+                answer: "Información médica, financiera y neural.",
+                hint: "Los datos más privados y valiosos para las corporaciones."
+            },
+            {
+                q: "¿Qué se entiende por 'Actualización de Firmware' en un implante cibernético?",
+                options: ["Cambiar el color del implante.", "Instalar nuevo software de bajo nivel en el hardware.", "Recargar la batería.", "Retirar el implante."],
+                answer: "Instalar nuevo software de bajo nivel en el hardware.",
+                hint: "El software esencial que controla el hardware."
+            },
+            {
+                q: "¿Cuál fue la invención de Alan Turing que sentó las bases de la computación moderna?",
+                options: ["El Teléfono.", "La Máquina de Turing (Modelo Teórico de Computación).", "El Bombardero Estratégico.", "El Microscopio Electrónico."],
+                answer: "La Máquina de Turing (Modelo Teórico de Computación).",
+                hint: "Un modelo abstracto de lo que una computadora puede hacer."
+            },
+            {
+                q: "¿Qué es un 'Data Spike' o 'Aguijón de Datos'?",
+                options: ["Un programa para compartir archivos.", "Un ataque de datos enfocado en sobrecargar o dañar un sistema.", "Una antena de red.", "Una base de datos de películas."],
+                answer: "Un ataque de datos enfocado en sobrecargar o dañar un sistema.",
+                hint: "Una inyección de datos maliciosos y dañinos."
+            },
+            {
+                q: "¿Cuál es el principal rol de un 'Firewall' avanzado en una red corporativa?",
+                options: ["Acelerar la conexión.", "Inspeccionar y filtrar el tráfico de red según reglas de seguridad.", "Traducir idiomas.", "Organizar archivos."],
+                answer: "Inspeccionar y filtrar el tráfico de red según reglas de seguridad.",
+                hint: "La principal línea de defensa contra intrusiones."
+            },
+            {
+                q: "¿Qué significa 'Obsoleto' en el contexto del hardware tecnológico?",
+                options: ["Es nuevo y moderno.", "Es funcional pero ya no es la tecnología más reciente o eficiente.", "Es ilegal de usar.", "Es muy caro."],
+                answer: "Es funcional pero ya no es la tecnología más reciente o eficiente.",
+                hint: "Superado por las nuevas versiones."
+            },
+            {
+                q: "¿Qué es un 'Protocolo de Mano' en el contexto de redes?",
+                options: ["Un tipo de saludo.", "Un acuerdo o secuencia para establecer una conexión de red segura.", "Un manual de usuario.", "Un gesto de hacker."],
+                answer: "Un acuerdo o secuencia para establecer una conexión de red segura.",
+                hint: "Un término de red para el intercambio inicial de información (handshake)."
+            },
         ];
 
-        // --- VARIABLES DE ESTADO ---
-        let preguntasSeleccionadas = [];
-        let preguntaActualIndice = 0;
-        let puntuacion = 0;
-        let respuestasJugador = []; // Almacena { id: ID, respuesta: 'opcion elegida', fifty_fifty_used: true/false }
-        let contador5050 = 5;
-        let cronometroInicio = 0;
-        let intervalId = null;
+        // ===============================================
+        // 2. VARIABLES DE ESTADO Y CONFIGURACIÓN
+        // ===============================================
+        const NUM_QUESTIONS_IN_QUIZ = 20;
+        let selectedQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = []; // Almacena la respuesta seleccionada por el usuario (texto de la opción)
+        let uses5050 = 5;
+        let timerInterval;
+        let timeElapsed = 0;
 
-        // Cargar el contador de veces del almacenamiento local
-        let vecesCuestionarioHecho = parseInt(localStorage.getItem('vecesCuestionarioHecho') || 0);
+        // Referencias a elementos del DOM
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const startButton = document.getElementById('start-button');
+        const sessionCounter = document.getElementById('session-counter');
+        const timerDisplay = document.getElementById('timer');
+        const uses5050Display = document.getElementById('uses-50-50');
+        const questionIndexDisplay = document.getElementById('question-index');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const finishButton = document.getElementById('finish-button');
+        const hintButton = document.getElementById('hint-button');
+        const fiftyFiftyButton = document.getElementById('fifty-fifty-button');
+        const jarvisFeedback = document.getElementById('jarvis-feedback');
+        const finalScore = document.getElementById('final-score');
+        const finalTime = document.getElementById('final-time');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const reviewTableBody = document.getElementById('review-table-body');
+        const newCycleButton = document.getElementById('new-cycle-button');
 
-        // --- FUNCIONES CORE ---
+        // ===============================================
+        // 3. FUNCIONES DE UTILIDAD
+        // ===============================================
 
         /**
          * Función de utilidad para mezclar un array (Algoritmo de Fisher-Yates).
-         * @param {Array} array
+         * @param {Array} array - El array a mezclar.
+         * @returns {Array} El array mezclado.
          */
-        function mezclarArray(array) {
+        function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
         }
 
         /**
-         * Prepara el cuestionario: selecciona preguntas y reinicia contadores.
+         * Formatea segundos a MM:SS.
+         * @param {number} totalSeconds - Tiempo total en segundos.
+         * @returns {string} Tiempo formateado.
          */
-        function iniciarCuestionario() {
-            // 1. Ocultar inicio, mostrar quiz
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.remove('hidden');
-            document.getElementById('results-screen').classList.add('hidden');
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
 
-            // 2. Variables de estado
-            puntuacion = 0;
-            preguntaActualIndice = 0;
-            respuestasJugador = [];
-            contador5050 = 5;
-            vecesCuestionarioHecho++;
-            localStorage.setItem('vecesCuestionarioHecho', vecesCuestionarioHecho);
+        // ===============================================
+        // 4. LÓGICA DEL CUESTIONARIO
+        // ===============================================
 
-            // 3. Selección y mezcla de preguntas (20 de 60)
-            const baseMezclada = [...BASE_DE_DATOS_PREGUNTAS];
-            mezclarArray(baseMezclada);
-            preguntasSeleccionadas = baseMezclada.slice(0, 20);
+        /**
+         * Prepara el cuestionario: selecciona preguntas, reinicia estados.
+         */
+        function initializeQuiz() {
+            // 1. Obtener preguntas aleatorias
+            const shuffledAllQuestions = shuffleArray([...ALL_QUESTIONS]);
+            selectedQuestions = shuffledAllQuestions.slice(0, NUM_QUESTIONS_IN_QUIZ);
 
-            // Inicializar el array de respuestas del jugador
-            preguntasSeleccionadas.forEach(q => {
-                // Mezclamos las opciones de cada pregunta al inicio
-                mezclarArray(q.opciones);
-                respuestasJugador.push({ id: q.id, respuesta: null, fifty_fifty_used: false, opciones_actuales: q.opciones });
+            // 2. Mezclar opciones para todas las preguntas seleccionadas
+            selectedQuestions.forEach(q => {
+                // Clonar las opciones para que el 50/50 o la pista no modifiquen el original
+                q.shuffledOptions = shuffleArray([...q.options]); 
+                // Inicializar estado específico de la pregunta
+                q.optionsVisibility = new Array(q.shuffledOptions.length).fill(true);
+                q.hintUsed = false;
             });
 
-            // 4. Iniciar Cronómetro
-            cronometroInicio = Date.now();
-            if (intervalId) clearInterval(intervalId);
-            intervalId = setInterval(actualizarCronometro, 1000);
+            // 3. Reiniciar estado global
+            currentQuestionIndex = 0;
+            userAnswers = new Array(NUM_QUESTIONS_IN_QUIZ).fill(null);
+            uses5050 = 5;
+            timeElapsed = 0;
             
-            // 5. Mostrar la primera pregunta
-            document.getElementById('contador-veces').textContent = vecesCuestionarioHecho;
-            document.getElementById('contador-50-50').textContent = contador5050;
-            mostrarPreguntaActual();
+            // 4. Actualizar contadores
+            uses5050Display.textContent = uses5050;
+            updateSessionCounter(true);
+        }
+
+        /**
+         * Inicia o reanuda el cronómetro.
+         */
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                timerDisplay.textContent = formatTime(timeElapsed);
+            }, 1000);
+        }
+
+        /**
+         * Detiene el cronómetro.
+         */
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        /**
+         * Actualiza el contador de sesiones.
+         * @param {boolean} increment - Si es true, incrementa el contador.
+         */
+        function updateSessionCounter(increment = false) {
+            // Usar localStorage para persistir el contador entre sesiones
+            let count = parseInt(localStorage.getItem('quizSessionCount') || '0');
+            if (increment) {
+                count++;
+                localStorage.setItem('quizSessionCount', count.toString());
+            }
+            sessionCounter.textContent = count;
         }
 
         /**
          * Muestra la pregunta actual y sus opciones.
          */
-        function mostrarPreguntaActual() {
-            const index = preguntaActualIndice;
-            const pregunta = preguntasSeleccionadas[index];
-            const respuestaGuardada = respuestasJugador[index].respuesta;
-
-            // Actualizar el encabezado y el texto de la pregunta
-            document.getElementById('pregunta-numero').textContent = `Pregunta ${index + 1}/20 (Temática: ${pregunta.tematica})`;
-            document.getElementById('pregunta-texto').textContent = pregunta.pregunta;
-            document.getElementById('contador-50-50').textContent = contador5050;
+        function renderQuestion() {
+            // 1. Obtener datos de la pregunta
+            const qData = selectedQuestions[currentQuestionIndex];
             
-            // Generar opciones de respuesta
-            const opcionesContenedor = document.getElementById('opciones-contenedor');
-            opcionesContenedor.innerHTML = '';
+            // 2. Actualizar encabezados
+            questionIndexDisplay.textContent = `Pregunta ${currentQuestionIndex + 1}/${NUM_QUESTIONS_IN_QUIZ}`;
+            questionText.textContent = qData.q;
+            
+            // Mostrar feedback de JARVIS (si se ha usado Pista) o el mensaje por defecto.
+            if (qData.hintUsed) {
+                 jarvisFeedback.textContent = `JARVIS: Pista ya entregada para esta consulta: "${qData.hint}"`;
+            } else {
+                 jarvisFeedback.textContent = `JARVIS: Esperando comandos, Netrunner.`;
+            }
+           
 
-            // Usamos las opciones guardadas en respuestasJugador para respetar el 50/50
-            const opcionesDisponibles = respuestasJugador[index].opciones_actuales;
+            // 3. Renderizar opciones
+            optionsContainer.innerHTML = '';
+            qData.shuffledOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                
+                // Deshabilitar si se ocultó por 50/50
+                if (!qData.optionsVisibility[index]) {
+                    optionButton.classList.add('disabled');
+                    optionButton.disabled = true;
+                }
 
-            opcionesDisponibles.forEach(opcion => {
-                const isRemoved = respuestasJugador[index].fifty_fifty_used &&
-                                 opcion !== pregunta.respuesta_correcta &&
-                                 opcion !== respuestasJugador[index].opcion_incorrecta_restante &&
-                                 !opcionesDisponibles.includes(opcion); // Si fue eliminada por el 50/50
+                // Marcar la respuesta del usuario si existe
+                if (userAnswers[currentQuestionIndex] === option) {
+                    optionButton.classList.add('selected');
+                }
 
-                const label = document.createElement('label');
-                label.className = isRemoved ? 'option-removed' : '';
-                label.innerHTML = `
-                    <input type="radio" name="respuesta" value="${opcion}" ${opcion === respuestaGuardada ? 'checked' : ''}>
-                    ${opcion}
+                // Asignar evento de click
+                optionButton.onclick = () => selectAnswer(option);
+                
+                optionsContainer.appendChild(optionButton);
+            });
+
+            // 4. Actualizar botones de navegación y JARVIS
+            prevButton.disabled = currentQuestionIndex === 0;
+            
+            const isLastQuestion = currentQuestionIndex === NUM_QUESTIONS_IN_QUIZ - 1;
+            nextButton.style.display = isLastQuestion ? 'none' : 'block';
+            finishButton.style.display = isLastQuestion ? 'block' : 'none';
+            
+            // El 50/50 se deshabilita si ya no hay usos O si ya se usó en esta pregunta
+            const fiftyFiftyUsedOnCurrent = qData.optionsVisibility.filter(v => !v).length > 0;
+            fiftyFiftyButton.disabled = uses5050 === 0 || fiftyFiftyUsedOnCurrent;
+        }
+
+        /**
+         * Guarda la respuesta del usuario y actualiza la UI.
+         * @param {string} selectedOption - El texto de la opción seleccionada.
+         */
+        function selectAnswer(selectedOption) {
+            userAnswers[currentQuestionIndex] = selectedOption;
+            
+            // Desmarcar todas las opciones y marcar la seleccionada
+            Array.from(optionsContainer.children).forEach(btn => {
+                btn.classList.remove('selected');
+                if (btn.textContent === selectedOption) {
+                    btn.classList.add('selected');
+                }
+            });
+        }
+
+        /**
+         * Lógica del asistente JARVIS: Pista.
+         */
+        function useHint() {
+            const qData = selectedQuestions[currentQuestionIndex];
+            
+            if (qData.hintUsed) {
+                jarvisFeedback.textContent = `JARVIS: Pista ya entregada para esta consulta: "${qData.hint}"`;
+                return;
+            }
+            
+            qData.hintUsed = true;
+            jarvisFeedback.textContent = `JARVIS: Pista contextual — "${qData.hint}"`;
+            renderQuestion(); // Re-renderizar para actualizar el estado de hintUsed
+        }
+
+        /**
+         * Lógica del asistente JARVIS: 50/50.
+         */
+        function useFiftyFifty() {
+            const qData = selectedQuestions[currentQuestionIndex];
+
+            if (uses5050 <= 0) {
+                jarvisFeedback.textContent = `JARVIS: Alerta. Usos de 50/50 agotados. Límite excedido.`;
+                return;
+            }
+            
+            if (qData.optionsVisibility.filter(v => !v).length > 0) {
+                jarvisFeedback.textContent = `JARVIS: Error. El 50/50 ya fue aplicado a esta pregunta.`;
+                return;
+            }
+
+            uses5050--;
+            uses5050Display.textContent = uses5050;
+            jarvisFeedback.textContent = `JARVIS: Ejecutando Protocolo 50/50. Eliminando distracciones...`;
+            
+            
+            const correctOption = qData.answer;
+            let incorrectOptionsIndices = [];
+            qData.shuffledOptions.forEach((option, index) => {
+                // Solo considera para eliminar opciones que están visibles y son incorrectas
+                if (qData.optionsVisibility[index] && option !== correctOption) {
+                    incorrectOptionsIndices.push(index);
+                }
+            });
+
+            // Seleccionar 2 de las opciones incorrectas para eliminar
+            shuffleArray(incorrectOptionsIndices);
+            const indicesToRemove = incorrectOptionsIndices.slice(0, 2);
+
+            // Actualizar visibilidad de opciones
+            indicesToRemove.forEach(index => {
+                qData.optionsVisibility[index] = false;
+            });
+
+            // Forzar el re-renderizado para ocultar las opciones y deshabilitar el botón
+            renderQuestion();
+        }
+
+        /**
+         * Mueve a la siguiente pregunta.
+         */
+        function nextQuestion() {
+            if (currentQuestionIndex < NUM_QUESTIONS_IN_QUIZ - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        /**
+         * Mueve a la pregunta anterior.
+         */
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        /**
+         * Calcula la puntuación final y muestra los resultados.
+         */
+        function finishQuiz() {
+            stopTimer();
+            
+            let correctCount = 0;
+            let reviewHtml = '';
+
+            for (let i = 0; i < NUM_QUESTIONS_IN_QUIZ; i++) {
+                const question = selectedQuestions[i];
+                const userAnswer = userAnswers[i];
+                const isCorrect = userAnswer === question.answer;
+
+                if (isCorrect) {
+                    correctCount++;
+                }
+
+                const yourAnswerText = userAnswer || 'SIN RESPUESTA';
+                const answerClass = isCorrect ? 'correct-answer' : 'incorrect-answer';
+
+                reviewHtml += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${question.q}</td>
+                        <td class="${answerClass}">${yourAnswerText}</td>
+                        <td class="correct-answer">${question.answer}</td>
+                    </tr>
                 `;
-                opcionesContenedor.appendChild(label);
-            });
-
-            // Lógica de botones de navegación
-            document.getElementById('btn-anterior').disabled = index === 0;
-            document.getElementById('btn-siguiente').textContent = index === 19 ? 'Finalizar' : 'Siguiente';
-            
-            // Re-habilitar/Deshabilitar 50/50 si ya fue usado en esta pregunta
-            document.getElementById('btn-50-50').disabled = respuestasJugador[index].fifty_fifty_used || contador5050 === 0;
-            
-            // Limpiar consola de JARVIS
-            jarvis.escribirMensaje('Esperando comandos, Netrunner.');
-        }
-
-        /**
-         * Almacena la respuesta del jugador y navega.
-         * @param {number} direccion - (+1 para siguiente, -1 para anterior)
-         */
-        function navegar(direccion) {
-            // Guardar respuesta actual antes de navegar
-            const radios = document.getElementsByName('respuesta');
-            let respuestaElegida = null;
-            for (const radio of radios) {
-                if (radio.checked) {
-                    respuestaElegida = radio.value;
-                    break;
-                }
             }
-            respuestasJugador[preguntaActualIndice].respuesta = respuestaElegida;
 
-            // Navegar
-            preguntaActualIndice += direccion;
-
-            if (preguntaActualIndice >= 20) {
-                // Finalizar
-                finalizarCuestionario();
-            } else if (preguntaActualIndice < 0) {
-                // No debería suceder si el botón Anterior está deshabilitado
-                preguntaActualIndice = 0;
+            // Calcular nota
+            const finalScoreText = `${correctCount} / ${NUM_QUESTIONS_IN_QUIZ} (${((correctCount / NUM_QUESTIONS_IN_QUIZ) * 100).toFixed(0)}%)`;
+            
+            // Retroalimentación de JARVIS
+            let feedbackText;
+            const percentage = (correctCount / NUM_QUESTIONS_IN_QUIZ) * 100;
+            if (percentage >= 90) {
+                feedbackText = "Conexión Neural Óptima. Rendimiento excepcional. ¡Eres un maestro Netrunner! Tu dominio de la Matriz es impecable.";
+            } else if (percentage >= 70) {
+                feedbackText = "Conexión estable. Tienes un buen conocimiento de la Matriz. Revisa los logs para fortalecer tus protocolos de red.";
+            } else if (percentage >= 50) {
+                feedbackText = "Conexión intermitente. Necesitas más entrenamiento para navegar la Darknet. Concéntrate en el Hardware y la Ciberseguridad.";
             } else {
-                // Mostrar siguiente/anterior pregunta
-                mostrarPreguntaActual();
+                feedbackText = "Conexión fallida. Protocolo de seguridad violado. Necesitas una inmersión completa en la Academia de Netrunners para sobrevivir a la Matriz.";
             }
+
+            // 4. Actualizar la pantalla de resultados
+            finalScore.textContent = finalScoreText;
+            finalTime.textContent = formatTime(timeElapsed);
+            feedbackMessage.textContent = feedbackText;
+            reviewTableBody.innerHTML = reviewHtml;
+
+            // 5. Cambiar pantallas
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
         }
+
+        // ===============================================
+        // 5. MANEJO DE EVENTOS (LISTENERS)
+        // ===============================================
 
         /**
-         * Mantiene el cronómetro actualizado.
+         * Manejador principal para iniciar el ciclo del cuestionario.
          */
-        function actualizarCronometro() {
-            const tiempoTranscurrido = Date.now() - cronometroInicio;
-            const segundos = Math.floor((tiempoTranscurrido / 1000) % 60);
-            const minutos = Math.floor((tiempoTranscurrido / (1000 * 60)) % 60);
-
-            const tiempoFormateado = 
-                `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-            
-            document.getElementById('cronometro').textContent = tiempoFormateado;
+        function startQuiz() {
+            initializeQuiz();
+            renderQuestion();
+            startTimer();
+            startScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
         }
 
-        /**
-         * Calcula la puntuación y muestra los resultados.
-         */
-        function finalizarCuestionario() {
-            // 1. Detener Cronómetro
-            clearInterval(intervalId);
-            const tiempoFinal = document.getElementById('cronometro').textContent;
+        // Inicializar el contador de sesiones al cargar la página
+        updateSessionCounter(false);
 
-            // 2. Calcular Puntuación y Retroalimentación
-            puntuacion = 0;
-            const logs = [];
+        // Configurar Event Listeners
+        startButton.addEventListener('click', startQuiz);
+        newCycleButton.addEventListener('click', startQuiz);
+        nextButton.addEventListener('click', nextQuestion);
+        prevButton.addEventListener('click', prevQuestion);
+        finishButton.addEventListener('click', finishQuiz);
+        hintButton.addEventListener('click', useHint);
+        fiftyFiftyButton.addEventListener('click', useFiftyFifty);
 
-            preguntasSeleccionadas.forEach((q, index) => {
-                const respuestaJugador = respuestasJugador[index].respuesta;
-                const esCorrecta = respuestaJugador === q.respuesta_correcta;
-                if (esCorrecta) {
-                    puntuacion++;
-                }
-
-                logs.push({
-                    numero: index + 1,
-                    pregunta: q.pregunta,
-                    jugador: respuestaJugador || 'No Respondida',
-                    correcta: q.respuesta_correcta,
-                    esCorrecta: esCorrecta
-                });
-            });
-
-            // 3. Generar Retroalimentación de JARVIS
-            let feedback = '';
-            if (puntuacion >= 18) {
-                feedback = "¡Impresionante! Tienes acceso root a la Matriz. Tu conocimiento es digno de un 'Ghost in the Shell'. Dominio excepcional.";
-            } else if (puntuacion >= 12) {
-                feedback = "Conexión estable. Tienes un buen entendimiento del sistema. Continúa hackeando, y pronto dominarás la Net.";
-            } else {
-                feedback = "Fallo de conexión. Tu señal es débil. Revisa tus logs y vuelve a intentarlo para evitar ser un 'rebotante' en el ciberespacio.";
-            }
-            
-            // 4. Mostrar Resultados
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('results-screen').classList.remove('hidden');
-            
-            document.getElementById('puntuacion-final').textContent = `${puntuacion} / 20`;
-            document.getElementById('tiempo-final').textContent = tiempoFinal;
-            document.getElementById('feedback-jarvis').textContent = feedback;
-            
-            // Generar tabla de logs
-            const revisionLogs = document.getElementById('revision-logs');
-            revisionLogs.innerHTML = logs.map(log => `
-                <tr>
-                    <td>${log.numero}</td>
-                    <td>${log.pregunta}</td>
-                    <td class="${log.esCorrecta ? 'correct-answer' : 'incorrect-answer'}">${log.jugador}</td>
-                    <td class="correct-answer">${log.correcta}</td>
-                </tr>
-            `).join('');
-        }
-
-        // --- ASISTENTE JARVIS ---
-        const jarvis = {
-            console: document.getElementById('jarvis-console'),
-            
-            escribirMensaje(mensaje) {
-                this.console.innerHTML = `<strong>JARVIS: </strong> ${mensaje}`;
-            },
-
-            mostrarPista() {
-                const pregunta = preguntasSeleccionadas[preguntaActualIndice];
-                this.escribirMensaje(`Analizando datos... La pista para esta secuencia es: **${pregunta.pista}**.`);
-            },
-
-            usar50_50() {
-                if (contador5050 <= 0 || respuestasJugador[preguntaActualIndice].fifty_fifty_used) {
-                    this.escribirMensaje("El sistema de depuración 50/50 ha alcanzado su límite. Requiere reinicio. (0 usos restantes).");
-                    return;
-                }
-
-                contador5050--;
-                respuestasJugador[preguntaActualIndice].fifty_fifty_used = true;
-                document.getElementById('contador-50-50').textContent = contador5050;
-                document.getElementById('btn-50-50').disabled = true;
-
-                const pregunta = preguntasSeleccionadas[preguntaActualIndice];
-                const opciones = pregunta.opciones;
-                const correcta = pregunta.respuesta_correcta;
-                
-                // Encontrar las incorrectas
-                let incorrectas = opciones.filter(op => op !== correcta);
-                
-                // Seleccionar dos incorrectas para eliminar
-                mezclarArray(incorrectas);
-                
-                // La opción incorrecta que queda es la primera de las que no se eliminan
-                const opcionIncorrectaRestante = incorrectas[0];
-                respuestasJugador[preguntaActualIndice].opcion_incorrecta_restante = opcionIncorrectaRestante;
-
-                // Las opciones a ELIMINAR son las dos últimas de las incorrectas (siempre que haya 3)
-                const opcionesAEliminar = incorrectas.slice(1, 3);
-                
-                // Actualizar la lista de opciones para la UI (opciones_actuales solo contiene las 4 originales)
-                const opcionesContenedor = document.getElementById('opciones-contenedor');
-                const labels = opcionesContenedor.querySelectorAll('label');
-
-                labels.forEach(label => {
-                    const input = label.querySelector('input');
-                    if (opcionesAEliminar.includes(input.value)) {
-                        label.classList.add('option-removed');
-                        input.disabled = true; // Deshabilitar el radio button
-                    }
-                });
-
-                this.escribirMensaje("Acción autorizada. Dos opciones críticas han sido purgadas. ¡Elige sabiamente, Netrunner!");
-            }
-        };
-
-        // Inicializar el contador de veces al cargar la página
-        document.getElementById('contador-veces').textContent = vecesCuestionarioHecho;
     </script>
-
 </body>
 </html>
