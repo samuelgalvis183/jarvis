@@ -3,307 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuestionario Tecnología - Samuel Galvis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Cuestionario de Tecnología - Samuel Galvis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #5e60ce;
+            --primary-light: #7274d9;
+            --accent: #48bfe3;
+            --success: #06d6a0;
+            --danger: #f25a6d;
+            --dark: #1e1e2e;
+            --gray: #94a3b8;
+            --light: #f8fafc;
+            --border: #e2e8f0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0d001a;
-            background-image: 
-                linear-gradient(45deg, rgba(255,0,255,0.04) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(255,0,255,0.04) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(0,255,255,0.04) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(0,255,255,0.04) 75%);
-            background-size: 30px 30px;
-            color: #00ffff;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
+            color: var(--dark);
         }
+
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(10, 0, 40, 0.9);
-            border: 3px solid #00ffff;
-            border-radius: 20px;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
             overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
             position: relative;
         }
-        .header {
-            background: linear-gradient(90deg, transparent, rgba(255,0,255,0.3), transparent);
-            padding: 30px;
-            text-align: center;
-            border-bottom: 3px solid #ff00ff;
-        }
+
         .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
         }
-        .stats {
-            position: absolute;
-            top: 25px;
-            right: 30px;
-            font-family: 'Orbitron';
-            font-size: 1.8rem;
-            color: #ff00ff;
-            text-shadow: 0 0 25px #ff00ff;
+
+        .header p {
+            opacity: 0.95;
+            font-size: 1.1rem;
         }
+
         .author {
             position: absolute;
-            bottom: 15px;
-            left: 30px;
-            color: #ff00ff;
-            font-size: 1.2rem;
+            bottom: 12px;
+            right: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
+
+        .progress-container {
+            height: 8px;
+            background: rgba(255,255,255,0.25);
+            margin: 25px 40px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
         .content {
-            padding: 60px 40px;
+            padding: 50px 40px;
+            min-height: 520px;
+        }
+
+        /* Pantalla de bienvenida con nombre */
+        .welcome {
             text-align: center;
-        }
-        .question-counter {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            text-shadow: 0 0 20px #00ffff;
-        }
-        .question {
-            font-family: 'Orbitron';
-            font-size: 2.4rem;
-            margin-bottom: 60px;
-            text-shadow: 0 0 30px #00ffff;
-        }
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            max-width: 900px;
+            max-width: 600px;
             margin: 0 auto;
         }
-        .option {
-            background: rgba(0, 255, 255, 0.08);
-            border: 3px solid #00ffff;
-            border-radius: 15px;
-            padding: 30px;
-            font-size: 1.7rem;
-            cursor: pointer;
-            transition: all 0.4s;
+
+        .welcome h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
         }
-        .option:hover {
-            background: rgba(0, 255, 255, 0.2);
-            border-color: #ff00ff;
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(255, 0, 255, 0.4);
+
+        .welcome p {
+            font-size: 1.15rem;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 30px;
         }
-        .option.selected {
-            background: linear-gradient(90deg, rgba(255,0,255,0.5), rgba(0,255,255,0.5));
-            border-color: #ff00ff;
-            font-weight: bold;
-            box-shadow: 0 0 50px rgba(255, 0, 255, 0.7);
-        }
-        .navigation {
-            margin-top: 70px;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-        }
-        button {
-            background: transparent;
-            border: 4px solid #00ffff;
-            color: #00ffff;
-            padding: 18px 60px;
-            font-family: 'Orbitron';
-            font-size: 1.8rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s;
-        }
-        button:hover {
-            background: #00ffff;
-            color: black;
-            box-shadow: 0 0 50px #00ffff;
-        }
-        .btn-next {
-            border-color: #ff00ff;
-            color: #ff00ff;
-        }
-        .btn-next:hover {
-            background: #ff00ff;
-            box-shadow: 0 0 50px #ff00ff;
-        }
-        .welcome h2, .result h2 {
-            font-family: 'Orbitron';
-            font-size: 4rem;
-            margin: 30px 0;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        input#nameInput {
-            background: rgba(0,0,0,0.7);
-            border: 4px solid #00ffff;
-            color: #00ffff;
-            padding: 25px;
-            font-size: 2rem;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-            margin: 40px auto;
+
+        .name-input {
+            width: 100%;
+            max-width: 420px;
+            padding: 16px 20px;
+            font-size: 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            margin: 20px auto;
             display: block;
-        }
-        .score-display {
-            font-family: 'Orbitron';
-            font-size: 8rem;
-            margin: 50px 0;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>CUESTIONARIO TECNOLOGÍA</h1>
-            <div class="stats" id="stats">NODE 0/20 | 0/0 | 00:00</div>
-            <div class="author">Por: Samuel Galvis</div>
-        </div>
-        <div class="content" id="content"></div>
-    </div>
-
-    <script>
-        const questionsDB = [
-            {q:"¿Qué significa RAM?",o:["Read Access Memory","Random Access Memory","Run Access Memory","Rapid Access Memory"],c:1},
-            {q:"¿Qué capa OSI hace enrutamiento?",o:["Capa 1","Capa 2","Capa 3","Capa 7"],c:2},
-            {q:"¿TCP o UDP es orientado a conexión?",o:["UDP","TCP"],c:1},
-            {q:"¿Quién es el padre de la informática moderna?",o:["Bill Gates","Alan Turing","Steve Jobs"],c:1},
-            {q:"¿Qué riesgo tiene el overclocking?",o:["Menor rendimiento","Sobrecalentamiento"],c:1},
-            {q:"¿Qué significa IoT?",o:["Internet of Things","Input Output Terminal"],c:0},
-            {q:"¿En qué año salió el primer iPhone?",o:["2005","2007","2009"],c:1},
-            {q:"¿Qué traduce un compilador?",o:["Código fuente a máquina","HTML a CSS"],c:0},
-            {q:"¿SSD tiene partes móviles?",o:["Sí","No"],c:1},
-            {q:"¿Qué es Git?",o:["Editor de texto","Control de versiones"],c:1},
-            {q:"¿Qué significa VPN?",o:["Virtual Private Network","Very Powerful Node"],c:0},
-            {q:"¿Qué es blockchain?",o:["Cadena de bloques","Tipo de virus"],c:0},
-            {q:"¿Qué inicializa la BIOS?",o:["Windows","El hardware"],c:1},
-            {q:"¿Qué es Agile?",o:["Metodología de desarrollo","Lenguaje"],c:0},
-            {q:"¿Puerto de HTTPS?",o:["80","443"],c:1},
-            {q:"¿Qué fue ARPANET?",o:["Precursor de Internet","Primer PC"],c:0},
-            {q:"¿Para qué sirve RAID?",o:["Redundancia y rendimiento","Encriptación"],c:0},
-            {q:"¿Qué traduce NAT?",o:["IPs privadas a públicas","Dominios a IP"],c:0},
-            {q:"¿Qué es Machine Learning?",o:["Algoritmos que aprenden","Hardware"],c:0},
-            {q:"¿Qué significa CPU?",o:["Central Processing Unit","Computer Power Unit"],c:0},
-            {q:"¿Qué protocolo asigna IPs?",o:["DNS","DHCP"],c:1},
-            {q:"¿Qué hace un firewall?",o:["Filtra tráfico","Acelera internet"],c:0},
-            {q:"¿Año del World Wide Web?",o:["1989","1995"],c:0},
-            {q:"¿Qué fue ENIAC?",o:["Primera computadora electrónica","Primer móvil"],c:0},
-            {q:"¿Qué significa PCIe?",o:["Peripheral Component Interconnect Express","Power Cache Interface"],c:0},
-            {q:"¿Qué hace el garbage collector?",o:["Libera memoria","Compila código"],c:0},
-            {q:"¿Qué es MVC?",o:["Model-View-Controller","Memory-Virtual-Core"],c:0},
-            {q:"¿Qué es la memoria caché?",o:["Lenta en disco","Rápida cerca del CPU"],c:1},
-            {q:"¿Protocolo de correo?",o:["HTTP","SMTP"],c:1},
-            {q:"¿SSD NVMe es más rápido que SATA?",o:["No","Sí"],c:1},
-            {q:"¿Qué significa API?",o:["Application Programming Interface","Advanced Processor"],c:0},
-            {q:"¿Big Data tiene 3V?",o:["No","Sí"],c:1},
-            {q:"¿Qué significa URL?",o:["Uniform Resource Locator","Universal Random Link"],c:0},
-            {q:"¿SSH es acceso remoto seguro?",o:["No","Sí"],c:1},
-            {q:"¿Qué significa GPU?",o:["Graphics Processing Unit","General Purpose Unit"],c:0},
-            {q:"¿Cloud computing es servicios remotos?",o:["No","Sí"],c:1},
-            {q:"¿Qué significa HTML?",o:["HyperText Markup Language","High Tech Modern Language"],c:0},
-            {q:"¿Un dominio es nombre legible de sitio?",o:["No","Sí"],c:1},
-            {q:"¿Un switch conecta dispositivos en LAN?",o:["No","Sí"],c:1},
-            {q:"¿Realidad aumentada superpone digital al real?",o:["No","Sí"],c:1}
-        ];
-
-        let questions = [];
-        let current = -1;
-        let answers = [];
-        let name = "";
-        let startTime = 0;
-        let timer;
-
-        function timeFormat(sec) {
-            const m = String(Math.floor(sec/60)).padStart(2,'0');
-            const s = String(sec%60).padStart(2,'0');
-            return `${m}:${s}`;
+            text-align: center;
+            transition: all 0.3s;
         }
 
-        function updateStats() {
-            const elapsed = Math.floor((Date.now() - startTime)/1000);
-            const correct = answers.slice(0,current+1).filter((a,i)=>a===questions[i].c).length;
-            const wrong = answers.slice(0,current+1).filter(a=>a!==null).length - correct;
-            document.getElementById('stats').textContent = `NODE ${current+1}/20 | ${correct}/${wrong} | ${timeFormat(elapsed)}`;
+        .name-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(94, 96, 206, 0.15);
         }
 
-        function show() {
-            const c = document.getElementById('content');
-
-            if (!name) {
-                c.innerHTML = `<div class="welcome">
-                    <h2>ACCESO AL SISTEMA</h2>
-                    <input type="text" id="nameInput" placeholder="TU NOMBRE" autofocus style="margin:30px auto;display:block;width:80%;max-width:500px;padding:20px;font-size:2rem;border:4px solid #00ffff;border-radius:15px;background:rgba(0,0,0,0.7);color:#00ffff;text-align:center;">
-                    <button class="btn-next" onclick="name=document.getElementById('nameInput').value||'Runner';show()">ENTRAR</button>
-                </div>`;
-                return;
-            }
-
-            if (current === -1) {
-                c.innerHTML = `<div class="welcome">
-                    <h2>¡HOLA, ${name.toUpperCase()}!</h2>
-                    <p>20 preguntas de tecnología nivel intermedio</p>
-                    <button class="btn-next" onclick="startQuiz()">INICIAR</button>
-                </div>`;
-                return;
-            }
-
-            if (current < 20) {
-                const q = questions[current];
-                c.innerHTML = `
-                    <div class="question-counter">NODE ${current+1}/20</div>
-                    <div class="question">${q.q}</div>
-                    <div class="options">
-                        ${q.o.map((opt,i)=>`
-                            <div class="option ${answers[current]===i?'selected':''}" onclick="answers[current]=i;show()">
-                                ${opt}
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="navigation">
-                        <button ${current===0?'disabled':''} onclick="current--;show()">ANTERIOR</button>
-                        <button class="btn-next" onclick="current<19?current++:current=20;show()">
-                            ${current===19?'FINALIZAR':'SIGUIENTE'}
-                        </button>
-                    </div>
-                `;
-                updateStats();
-            } else {
-                clearInterval(timer);
-                const time = Math.floor((Date.now()-startTime)/1000);
-                const correct = answers.filter((a,i)=>a===questions[i].c).length;
-                const percent = Math.round(correct/20*100);
-                c.innerHTML = `<div class="result">
-                    <h2>¡COMPLETADO!</h2>
-                    <div class="score-display">${correct}/20</div>
-                    <p style="font-size:2.5rem;color:#ff00ff;margin:30px 0">${percent}% ACIERTOS</p>
-                    <p style="font-size:2rem">TIEMPO: ${timeFormat(time)}</p>
-                    <button class="btn-next" onclick="location.reload()">NUEVA PARTIDA</button>
-                </div>`;
-            }
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 35px 0;
         }
 
-        function startQuiz() {
-            questions = [...questionsDB].sort(()=>Math.random()-0.5).slice(0,20);
-            answers = new Array(20).fill(null);
-            current = 0;
-            startTime = Date.now();
-            timer = setInterval(updateStats, 500);
-            show();
+        .topic {
+            background: linear-gradient(135deg, #e0e7ff, #c3dafe);
+            padding: 18px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 6px 15px rgba(94,96,206,0.1);
         }
 
-        show();
-    </script>
-</body>
-</html>
+        /* Pregunta */
+        .question-card {
+            background: #fafbff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(94,96,206,0.08);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .options {
+            display: grid;
+            gap: 18px;
+        }
+
+        .option {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 1.15rem;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(94,96,206,0.12);
+        }
+
+        .option input[type="radio"] {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--primary);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: #eef2ff;
+            box-shadow: 0 0 0 5px rgba(94,96,206,0.15);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 16px 36px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-prev {
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a5cc4;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(94,96,206,0.35);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Resultado final */
+        .result {
+            text-align: center;
+        }
+
+        .greeting {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            font-weight: 800;
+            color: white;
+            font-size: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .excellent { background: linear-gradient(135deg, #...
